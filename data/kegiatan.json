@@ -1,14 +1,6 @@
 {
   "items": [
     {
-      "judul": "Uji Coba Sistem Admin",
-      "tanggal": "2026-11-18",
-      "kategori": "Pengumuman",
-      "isi": "Ini kegiatan uji coba dari sistem otomatis. Jika Anda melihat ini di beranda, berarti sistem bekerja.",
-      "gambar": "",
-      "id": "mwllh78n"
-    },
-    {
       "id": "contoh1",
       "judul": "Contoh: MPLS 2026 Meriah di SDN 1 Klambu",
       "tanggal": "2026-07-13",
