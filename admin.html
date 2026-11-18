@@ -276,6 +276,8 @@ document.querySelectorAll('.tab-btn').forEach(b=>{
     document.getElementById(b.dataset.tab).classList.add('active');
     if(b.dataset.tab==='tab-img') loadSitus();
     if(b.dataset.tab==='tab-guru') loadGuru();
+    if(b.dataset.tab==='tab-set') loadSet();
+    if(b.dataset.tab==='tab-ppdb') loadPpdb();
   });
 });
 
