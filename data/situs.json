@@ -2,11 +2,5 @@
   "logo": null,
   "hero": null,
   "kepsek": null,
-  "guru": [
-    {
-      "nama": "Tes Guru",
-      "jabatan": "Guru Kelas 2",
-      "foto": ""
-    }
-  ]
+  "guru": []
 }
