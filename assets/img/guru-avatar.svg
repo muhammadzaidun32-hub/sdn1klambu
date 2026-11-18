@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Avatar guru universal (flat) -->
+  <defs>
+    <linearGradient id="bgAv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#eff6ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bgAv)"/>
+
+  <!-- body batik blazer -->
+  <path d="M60 400 C60 285 120 230 200 230 C280 230 340 285 340 400 Z" fill="#1e40af"/>
+  <!-- scarf batik -->
+  <path d="M158 230 L200 288 L242 230 L224 216 L200 246 L176 216 Z" fill="#b45309"/>
+  <circle cx="172" cy="300" r="6" fill="#fbbf24"/>
+  <circle cx="228" cy="300" r="6" fill="#fbbf24"/>
+  <circle cx="200" cy="345" r="6" fill="#fbbf24"/>
+  <!-- shirt collar -->
+  <path d="M172 228 L200 264 L228 228 L212 214 L200 232 L188 214 Z" fill="#ffffff"/>
+
+  <!-- head -->
+  <circle cx="200" cy="140" r="78" fill="#f2c19b"/>
+  <!-- hair -->
+  <path d="M122 132 C118 48 282 48 278 132 C270 82 234 62 200 62 C166 62 130 82 122 132 Z" fill="#2b1a10"/>
+  <!-- eyes -->
+  <circle cx="172" cy="140" r="8" fill="#1f2937"/>
+  <circle cx="228" cy="140" r="8" fill="#1f2937"/>
+  <!-- brows -->
+  <path d="M156 120 q16 -8 30 -2 M244 120 q-16 -8 -30 -2" stroke="#2b1a10" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- warm smile -->
+  <path d="M174 172 Q200 194 226 172" stroke="#a15c3b" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- glasses -->
+  <g stroke="#334155" stroke-width="6" fill="none">
+    <circle cx="172" cy="140" r="26"/>
+    <circle cx="228" cy="140" r="26"/>
+    <line x1="198" y1="140" x2="202" y2="140"/>
+  </g>
+  <!-- blush -->
+  <ellipse cx="150" cy="168" rx="16" ry="9" fill="#f2a58c" opacity="0.55"/>
+  <ellipse cx="250" cy="168" rx="16" ry="9" fill="#f2a58c" opacity="0.55"/>
+</svg>
