@@ -2,5 +2,46 @@
   "logo": null,
   "hero": null,
   "kepsek": null,
-  "guru": []
+  "guru": [
+    {
+      "nama": "Nur Anis, S.Pd.",
+      "jabatan": "Kepala Sekolah",
+      "foto": ""
+    },
+    {
+      "nama": "Soelipah, S.Pd.SD.",
+      "jabatan": "Guru Kelas 6",
+      "foto": ""
+    },
+    {
+      "nama": "Zaqia Hafisaturrahmi, S.Pd.",
+      "jabatan": "Guru Kelas 5",
+      "foto": ""
+    },
+    {
+      "nama": "Sumarsih, S.Pd.SD.",
+      "jabatan": "Guru Kelas 4",
+      "foto": ""
+    },
+    {
+      "nama": "Maili Muna Kurniawati, S.Pd.",
+      "jabatan": "Guru Kelas 3",
+      "foto": ""
+    },
+    {
+      "nama": "Denita Nur Azizah, S.Pd.",
+      "jabatan": "Guru Kelas 2",
+      "foto": ""
+    },
+    {
+      "nama": "Alimatul Hafidzhoh, S.Pd.",
+      "jabatan": "Guru Kelas 1",
+      "foto": ""
+    },
+    {
+      "nama": "Arsori, S.Pd.I.",
+      "jabatan": "Guru PAI BP",
+      "foto": ""
+    }
+  ]
 }
