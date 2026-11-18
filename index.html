@@ -59,7 +59,13 @@
 
 <!-- ===== Hero ===== -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-slider">
+    <div class="hero-slide active" style="background-image:url('assets/img/hero-sekolah.svg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/img/sekolah-depan.svg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/img/pramuka.svg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/img/kelas-belajar.svg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/img/olahraga.svg')"></div>
+  </div>
   <div class="container">
     <span class="hero-badge">★ Terakreditasi · Lingkungan belajar yang positif</span>
     <h1>Selamat Datang di<br><em>SDN 1 Klambu</em></h1>
@@ -74,6 +80,12 @@
       <div class="stat"><b><span data-count="12">0</span></b><span>Ruang Kelas</span></div>
       <div class="stat"><b><span data-count="41">0</span></b><span>Tahun Mengabdi (sejak 1985)</span></div>
     </div>
+  </div>
+  <!-- Kontrol slider: panah + titik, tengah bawah -->
+  <div class="hero-slider-nav">
+    <button class="hs-arrow" id="hsPrev" aria-label="Slide sebelumnya">‹</button>
+    <div class="hs-dots" id="hsDots"></div>
+    <button class="hs-arrow" id="hsNext" aria-label="Slide berikutnya">›</button>
   </div>
   <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none"><path fill="#f6f8fc" d="M0,60 C240,110 480,0 720,30 C960,60 1200,90 1440,50 L1440,90 L0,90 Z"></path></svg>
 </section>

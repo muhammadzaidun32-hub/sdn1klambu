@@ -23,6 +23,33 @@ function initSdnMain() {
     if (backdrop) backdrop.addEventListener('click', () => setMenu(false));
   }
 
+
+  /* ----- Hero slider (5 gambar, autoplay + panah + dots) ----- */
+  const slides = document.querySelectorAll('.hero-slide');
+  const dotsWrap = document.getElementById('hsDots');
+  if (slides.length && dotsWrap) {
+    let cur = 0, timer;
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'hs-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Ke slide ' + (i + 1));
+      d.addEventListener('click', () => { go(i); restart(); });
+      dotsWrap.appendChild(d);
+    });
+    const dots = dotsWrap.querySelectorAll('.hs-dot');
+    function go(n) {
+      slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active'); dots[cur].classList.add('active');
+    }
+    function restart() { clearInterval(timer); timer = setInterval(() => go(cur + 1), 5000); }
+    const prev = document.getElementById('hsPrev');
+    const next = document.getElementById('hsNext');
+    if (prev) prev.addEventListener('click', () => { go(cur - 1); restart(); });
+    if (next) next.addEventListener('click', () => { go(cur + 1); restart(); });
+    restart();
+  }
+
   /* ----- Header shadow saat scroll ----- */
   const nav = document.querySelector('header.nav');
   const toTop = document.getElementById('toTop');

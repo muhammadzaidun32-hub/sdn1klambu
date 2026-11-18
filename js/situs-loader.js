@@ -16,6 +16,8 @@
       document.querySelectorAll('header.nav .brand img, .f-brand img').forEach(img => img.src = s.logo);
     }
     if (s.hero) {
+      const slide1 = document.querySelector('.hero-slide');
+      if (slide1) slide1.style.backgroundImage = `url('${s.hero}')`;
       const hero = document.querySelector('.hero-bg');
       if (hero) hero.style.backgroundImage = `url('${s.hero}')`;
     }
