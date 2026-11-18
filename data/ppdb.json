@@ -1,3 +1,14 @@
-{
-  "daftar": []
-}
+[
+  {
+    "id": "PPDB-LR2H71",
+    "nama": "Anak Uji",
+    "nisn": "",
+    "lahir": "2019-05-10",
+    "asal": "",
+    "wali": "Wali Uji",
+    "wa": "08123456789",
+    "alamat": "",
+    "tanggal": "2026-11-18T06:38:19.789Z",
+    "status": "Menunggu verifikasi"
+  }
+]
