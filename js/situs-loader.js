@@ -24,7 +24,8 @@
     }
     if (Array.isArray(s.guru)) {
       document.querySelectorAll('.grid-4 .card img').forEach((img, i) => {
-        if (s.guru[i]) img.src = s.guru[i];
+        // hanya ganti bila URL foto guru benar-benar ada (tidak kosong)
+        if (s.guru[i] && s.guru[i].foto) img.src = s.guru[i].foto;
       });
     }
   }
