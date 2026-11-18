@@ -572,6 +572,100 @@ function resetForm(){
 }
 $('#resetBtn').addEventListener('click', resetForm);
 
+
+/* ================= PENGATURAN (ON/OFF) ================= */
+async function loadSet(){
+  try{
+    const p = await (await fetch('/api/pengaturan?t='+Date.now())).json();
+    document.getElementById('setPpdb').checked = !!p.ppdbTerbuka;
+    document.getElementById('setWa').checked = !!p.waTampil;
+    document.getElementById('setWaNomor').value = p.waNomor || '';
+    document.getElementById('setEmail').value = p.email || '';
+    document.getElementById('setTelp').value = p.telepon || '';
+    document.getElementById('setAlamat').value = p.alamat || '';
+  }catch(e){ toast('Gagal memuat pengaturan', false); }
+}
+
+document.getElementById('simpanSet')?.addEventListener('click', async ()=>{
+  try{
+    const res = await fetch('/api/pengaturan', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':(sessionStorage.getItem('adminPwd')||'')},
+      body: JSON.stringify({
+        ppdbTerbuka: document.getElementById('setPpdb').checked,
+        waTampil: document.getElementById('setWa').checked,
+        waNomor: document.getElementById('setWaNomor').value.trim(),
+        email: document.getElementById('setEmail').value.trim(),
+        telepon: document.getElementById('setTelp').value.trim(),
+        alamat: document.getElementById('setAlamat').value.trim()
+      })
+    });
+    const j = await res.json();
+    if(!res.ok) throw new Error(j.error||'Gagal');
+    toast('Pengaturan tersimpan!');
+  }catch(e){ toast(e.message, false); }
+});
+
+/* ================= PENDAFTAR PPDB (ADMIN) ================= */
+async function loadPpdb(){
+  const rows = document.getElementById('ppdbRows');
+  try{
+    const res = await fetch('/api/ppdb', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':(sessionStorage.getItem('adminPwd')||'')},
+      body: JSON.stringify({action:'admin-list'})
+    });
+    const j = await res.json();
+    if(!res.ok) throw new Error(j.error||'Gagal');
+    const d = j.daftar || [];
+    document.getElementById('ppdbCount').textContent = d.length + ' pendaftar';
+    rows.innerHTML = d.length ? d.map(p=>`
+      <tr>
+        <td style="padding:.6rem"><strong>${p.id}</strong></td>
+        <td style="padding:.6rem">${p.nama}</td>
+        <td style="padding:.6rem">${p.wali||'-'}</td>
+        <td style="padding:.6rem">${p.wa||'-'}</td>
+        <td style="padding:.6rem">${p.status}</td>
+        <td style="padding:.6rem">
+          <select onchange="ubahStatus('${p.id}', this.value)">
+            ${['Menunggu verifikasi','Diterima','Cadangan','Ditolak'].map(s=>`<option ${s===p.status?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td style="padding:.6rem"><button class="btn btn-sm btn-red" onclick="delPpdb('${p.id}')">Hapus</button></td>
+      </tr>`).join('')
+    : '<tr><td colspan="7" style="padding:1rem;color:var(--mute)">Belum ada pendaftar.</td></tr>';
+  }catch(e){ rows.innerHTML = `<tr><td colspan="7" style="color:#b91c1c;padding:1rem">${e.message}</td></tr>`; }
+}
+
+async function ubahStatus(id, status){
+  try{
+    const res = await fetch('/api/ppdb', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':(sessionStorage.getItem('adminPwd')||'')},
+      body: JSON.stringify({action:'admin-status', id, status})
+    });
+    const j = await res.json();
+    if(!res.ok) throw new Error(j.error||'Gagal');
+    toast('Status ' + id + ' -> ' + status);
+    loadPpdb();
+  }catch(e){ toast(e.message, false); }
+}
+
+async function delPpdb(id){
+  if(!confirm('Hapus pendaftar ' + id + '?')) return;
+  try{
+    const res = await fetch('/api/ppdb', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':(sessionStorage.getItem('adminPwd')||'')},
+      body: JSON.stringify({action:'admin-delete', id})
+    });
+    const j = await res.json();
+    if(!res.ok) throw new Error(j.error||'Gagal');
+    toast('Pendaftar dihapus');
+    loadPpdb();
+  }catch(e){ toast(e.message, false); }
+}
+
 /* auto login */
 if(sessionPwd){ api('check').then(showDash).catch(()=>sessionStorage.removeItem('adminPwd')); }
 </script>
