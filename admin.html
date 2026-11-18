@@ -183,18 +183,24 @@ textarea.input{resize:vertical;min-height:110px}
       <p style="color:var(--mute);font-size:.88rem;margin-bottom:1.2rem">Gambar yang Anda unggah di sini langsung mengganti tampilan website (mungkin perlu refresh 1–2 menit karena cache).</p>
       <div class="img-slot oval">
         <img id="img-logo" src="assets/img/logo.svg" alt="logo">
-        <div class="info"><h3>Logo Sekolah</h3><p>Tampil di pojok kiri atas &amp; footer (disarankan persegi/PNG)</p></div>
+        <div class="info"><h3>Logo Sekolah</h3><p>Tampil di pojok kiri atas &amp; footer (disarankan persegi/PNG)</p><a href="index.html" target="_blank" style="font-size:.78rem">Lihat di beranda ↗</a></div>
         <div style="display:flex;gap:.5rem"><button class="btn btn-sm btn-gold" onclick="pickSlot('logo')">Ganti</button><button class="btn btn-sm" style="background:var(--line)" onclick="resetSlot('logo')">↩ Kembali</button></div>
       </div>
       <div class="img-slot">
         <img id="img-hero" src="assets/img/hero-sekolah.svg" alt="hero">
-        <div class="info"><h3>Foto Utama (Hero Beranda)</h3><p>Latar besar di halaman beranda — disarankan foto gedung/kegiatan lebar (1600×900+)</p></div>
+        <div class="info"><h3>Foto Utama (Hero Beranda)</h3><p>Latar besar di halaman beranda — disarankan foto gedung/kegiatan lebar (1600×900+)</p><a href="index.html" target="_blank" style="font-size:.78rem">Lihat di beranda ↗</a></div>
         <div style="display:flex;gap:.5rem"><button class="btn btn-sm btn-gold" onclick="pickSlot('hero')">Ganti</button><button class="btn btn-sm" style="background:var(--line)" onclick="resetSlot('hero')">↩ Kembali</button></div>
       </div>
       <div class="img-slot oval">
         <img id="img-kepsek" src="assets/img/kepsek-asli.jpg" alt="kepsek">
-        <div class="info"><h3>Foto Kepala Sekolah</h3><p>Tampil di sambutan beranda &amp; halaman profil</p></div>
+        <div class="info"><h3>Foto Kepala Sekolah</h3><p>Tampil di sambutan beranda &amp; halaman profil</p><a href="profil.html" target="_blank" style="font-size:.78rem">Lihat di profil ↗</a> · <a href="index.html" target="_blank" style="font-size:.78rem">Beranda ↗</a></div>
         <div style="display:flex;gap:.5rem"><button class="btn btn-sm btn-gold" onclick="pickSlot('kepsek')">Ganti</button><button class="btn btn-sm" style="background:var(--line)" onclick="resetSlot('kepsek')">↩ Kembali</button></div>
+      </div>
+
+      <div class="img-slot">
+        <img id="img-galeri" src="assets/img/pramuka.svg" alt="galeri">
+        <div class="info"><h3>Foto Galeri &amp; Program</h3><p>Contoh foto untuk galeri kegiatan (pramuka, kelas, olahraga) — dipakai bila kegiatan belum berfoto</p></div>
+        <div style="display:flex;gap:.5rem"><a class="btn btn-sm" style="background:var(--line)" href="galeri.html" target="_blank">Lihat Galeri ↗</a></div>
       </div>
     </div>
   </div>
@@ -260,6 +266,7 @@ textarea.input{resize:vertical;min-height:110px}
   </div>
 
   <input type="file" id="slotFile" accept="image/*" class="hidden">
+  <input type="file" id="kegFotoFile" accept="image/*" class="hidden">
   <input type="file" id="guruFile" accept="image/*" class="hidden">
 </main>
   <div class="toast" id="toast"></div>
@@ -501,6 +508,7 @@ function render(items){
       </div>
       <div class="acts">
         <button class="btn btn-sm" style="background:var(--blue-50);color:var(--blue-700);border:1px solid var(--blue-100)" onclick="editItem('${it.id}')">✏️ Edit</button>
+        <button class="btn btn-sm btn-gold" onclick="gantiFotoKegiatan('${it.id}')">📷 Ganti Foto</button>
         <button class="btn btn-sm btn-red" onclick="delItem('${it.id}')">🗑 Hapus</button>
       </div>
     </div>`).join('');
@@ -665,6 +673,46 @@ async function delPpdb(id){
     loadPpdb();
   }catch(e){ toast(e.message, false); }
 }
+
+
+/* ================= GANTI FOTO KEGIATAN CEPAT ================= */
+async function gantiFotoKegiatan(id){
+  const inp = document.getElementById('kegFotoFile');
+  inp.value = '';
+  inp.dataset.id = id;
+  inp.click();
+}
+document.getElementById('kegFotoFile')?.addEventListener('change', async e=>{
+  const id = e.target.dataset.id;
+  const file = e.target.files[0];
+  if(!id || !file) return;
+  if(file.size > 4*1024*1024){ toast('Maksimal 4MB', false); return; }
+  toast('Mengunggah foto kegiatan...');
+  const b64 = await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result.split(',')[1]); fr.readAsDataURL(file); });
+  try{
+    // 1) unggah ke repo
+    const res = await fetch('/api/kegiatan', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':(sessionStorage.getItem('adminPwd')||'')},
+      body: JSON.stringify({action:'upload', filename:file.name, dataBase64:b64})
+    });
+    const j = await res.json();
+    if(!res.ok) throw new Error(j.error||'Gagal unggah');
+    // 2) update item kegiatan dengan URL baru
+    const item = window._items[id];
+    if(!item) throw new Error('Kegiatan tidak ditemukan');
+    item.gambar = j.url;
+    const res2 = await fetch('/api/kegiatan', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':(sessionStorage.getItem('adminPwd')||'')},
+      body: JSON.stringify({action:'update', item})
+    });
+    const j2 = await res2.json();
+    if(!res2.ok) throw new Error(j2.error||'Gagal simpan');
+    toast('Foto kegiatan diperbarui!');
+    loadList();
+  }catch(err){ toast(err.message, false); }
+});
 
 /* auto login */
 if(sessionPwd){ api('check').then(showDash).catch(()=>sessionStorage.removeItem('adminPwd')); }
