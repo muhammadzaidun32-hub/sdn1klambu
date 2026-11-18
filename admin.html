@@ -172,6 +172,8 @@ textarea.input{resize:vertical;min-height:110px}
     <button class="tab-btn active" data-tab="tab-keg">📋 Kegiatan</button>
     <button class="tab-btn" data-tab="tab-img">🖼️ Gambar Situs</button>
     <button class="tab-btn" data-tab="tab-guru">👨‍🏫 Data Guru</button>
+    <button class="tab-btn" data-tab="tab-set">⚙️ Pengaturan</button>
+    <button class="tab-btn" data-tab="tab-ppdb">📨 Pendaftar PPDB</button>
   </div>
 
   <!-- TAB: GAMBAR SITUS -->
@@ -204,6 +206,55 @@ textarea.input{resize:vertical;min-height:110px}
       <div id="guruList">Memuat…</div>
       <div style="margin-top:1.2rem;display:flex;gap:.8rem;flex-wrap:wrap">
         <button class="btn btn-primary" style="width:auto" onclick="addGuru()">➕ Tambah Guru</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-view" id="tab-set">
+    <div class="panel">
+      <h2>⚙️ Pengaturan Website</h2>
+      <label style="display:flex;align-items:center;gap:.7rem;margin:1rem 0;padding:1rem;border:1px solid var(--line);border-radius:12px;background:#fbfdff;cursor:pointer">
+        <input type="checkbox" id="setPpdb" style="width:20px;height:20px;accent-color:var(--blue-600)">
+        <span><strong>Buka Pendaftaran Siswa Baru (PPDB)</strong><br><small style="color:var(--mute)">Jika nonaktif, form pendaftaran online disembunyikan dari halaman PPDB.</small></span>
+      </label>
+      <label style="display:flex;align-items:center;gap:.7rem;margin:1rem 0;padding:1rem;border:1px solid var(--line);border-radius:12px;background:#fbfdff;cursor:pointer">
+        <input type="checkbox" id="setWa" style="width:20px;height:20px;accent-color:var(--blue-600)">
+        <span><strong>Tampilkan Tombol WhatsApp Mengambang</strong><br><small style="color:var(--mute)">Ikon hijau di pojok kiri bawah halaman website.</small></span>
+      </label>
+      <div class="form-group">
+        <label>Nomor WhatsApp Sekolah (untuk tombol &amp; form pesan)</label>
+        <input class="input" id="setWaNomor" placeholder="cth: 6281234567890">
+      </div>
+      <div class="form-group">
+        <label>Email Sekolah</label>
+        <input class="input" id="setEmail" placeholder="cth: sdn1klambu@gmail.com">
+      </div>
+      <div class="form-group">
+        <label>Telepon Sekolah</label>
+        <input class="input" id="setTelp" placeholder="cth: (0292) 123-456">
+      </div>
+      <div class="form-group">
+        <label>Alamat Lengkap</label>
+        <textarea class="input" id="setAlamat" rows="2"></textarea>
+      </div>
+      <button class="btn btn-primary" style="width:auto" id="simpanSet">💾 Simpan Pengaturan</button>
+    </div>
+  </div>
+
+  <div class="tab-view" id="tab-ppdb">
+    <div class="panel">
+      <h2>📨 Pendaftar PPDB Online</h2>
+      <div style="display:flex;gap:.8rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap">
+        <button class="btn btn-sm" id="refreshPpdb" style="background:var(--line)">🔄 Muat Ulang</button>
+        <span class="badge" id="ppdbCount">0 pendaftar</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem" id="ppdbTable">
+          <thead><tr style="text-align:left;background:var(--blue-50)">
+            <th style="padding:.7rem">Kode</th><th style="padding:.7rem">Nama</th><th style="padding:.7rem">Wali</th><th style="padding:.7rem">WA</th><th style="padding:.7rem">Status</th><th style="padding:.7rem">Aksi</th>
+          </tr></thead>
+          <tbody id="ppdbRows"><tr><td colspan="6" style="padding:1rem;color:var(--mute)">Klik "Muat Ulang" untuk memuat data.</td></tr></tbody>
+        </table>
       </div>
     </div>
   </div>

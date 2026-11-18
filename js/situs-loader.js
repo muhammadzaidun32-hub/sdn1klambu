@@ -1,48 +1,64 @@
 /* ============================================================
    Situs Loader — SDN 1 Klambu
-   Mengambil konfigurasi gambar dari /api/situs dan menerapkannya
-   ke halaman publik (logo navbar, hero, foto kepsek).
+   - Menerapkan gambar dinamis dari /api/situs
+   - Menerapkan pengaturan dari /api/pengaturan:
+     tombol WA (nomor + ON/OFF), form PPDB ON/OFF, kontak
    ============================================================ */
 (function () {
-  const API = '/api/situs';
+  async function get(url) {
+    const res = await fetch(url + '?t=' + Date.now());
+    if (!res.ok) throw new Error('gagal');
+    return res.json();
+  }
 
   function applySitus(s) {
-    // 1) Logo navbar + footer
     if (s.logo) {
-      document.querySelectorAll('header.nav .brand img, .f-brand img').forEach(img => {
-        img.src = s.logo;
-      });
+      document.querySelectorAll('header.nav .brand img, .f-brand img').forEach(img => img.src = s.logo);
     }
-    // 2) Hero beranda (CSS background)
     if (s.hero) {
       const hero = document.querySelector('.hero-bg');
       if (hero) hero.style.backgroundImage = `url('${s.hero}')`;
     }
-    // 3) Foto kepala sekolah (beranda + profil)
     if (s.kepsek) {
-      document.querySelectorAll('img[src*="kepsek-asli"]').forEach(img => {
-        img.src = s.kepsek;
-      });
+      document.querySelectorAll('img[src*="kepsek-asli"]').forEach(img => img.src = s.kepsek);
     }
-    // 4) Foto guru kartu di profil (bila URL disediakan per urutan)
     if (Array.isArray(s.guru)) {
-      const cards = document.querySelectorAll('.grid-4 .card img');
-      cards.forEach((img, i) => {
+      document.querySelectorAll('.grid-4 .card img').forEach((img, i) => {
         if (s.guru[i]) img.src = s.guru[i];
       });
     }
   }
 
-  async function init() {
-    try {
-      const res = await fetch(API + '?t=' + Date.now());
-      if (!res.ok) return;
-      const situs = await res.json();
-      // api/situs mengembalikan { logo, hero, kepsek, guru }
-      applySitus(situs);
-    } catch (e) {
-      /* diam: pakai gambar bawaan */
+  function applyPengaturan(p) {
+    // Tombol WhatsApp mengambang
+    const wa = document.querySelector('.wa-float');
+    if (wa) {
+      if (p.waNomor) {
+        wa.href = 'https://wa.me/' + p.waNomor.replace(/^0/, '62').replace(/[^0-9]/g, '');
+        document.querySelectorAll('#waForm')?.forEach(f => f.dataset.wa = p.waNomor);
+      }
+      if (p.waTampil === false) wa.style.display = 'none';
     }
+
+    // Kontak di topbar & footer
+    const setTxt = (id, v) => { const el = document.getElementById(id); if (el && v) el.textContent = el.textContent.replace(/(Jl\..*|sdn1klambu@gmail\.com|\(\d+\)?[\s\d-]*)/, v); };
+    if (p.alamat) setTxt('tb-alamat', '📍 ' + p.alamat);
+    if (p.email) setTxt('tb-email', '✉ ' + p.email);
+    if (p.telepon) setTxt('tb-telp', '☎ ' + p.telepon);
+
+    // Form PPDB: sembunyikan bila ditutup
+    if (p.ppdbTerbuka === false) {
+      const form = document.getElementById('formPendaftaran');
+      if (form) {
+        form.innerHTML = `<h3>🔒 Pendaftaran Belum Dibuka</h3>
+          <p style="color:var(--mute);font-size:.92rem;margin-top:.5rem">${p.ppdbInfo || 'Pendaftaran siswa baru saat ini belum dibuka. Silakan pantau halaman ini atau hubungi sekolah.'}</p>`;
+      }
+    }
+  }
+
+  async function init() {
+    try { applySitus(await get('/api/situs')); } catch {}
+    try { applyPengaturan(await get('/api/pengaturan')); } catch {}
   }
 
   if (document.readyState === 'loading') {

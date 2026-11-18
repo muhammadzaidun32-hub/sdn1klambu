@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadwal Pelajaran &amp; Kalender — SDN 1 Klambu</title>
+<meta name="description" content="Jadwal pelajaran kelas 1-6 dan kalender akademik SD Negeri 1 Klambu.">
+<link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.jadwal-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.6rem;justify-content:center}
+.jadwal-tab{padding:.6rem 1.2rem;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:.9rem;color:var(--mute);cursor:pointer;transition:.2s}
+.jadwal-tab.active{background:var(--blue-700);border-color:var(--blue-700);color:#fff}
+.tbl-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+table.jadwal{width:100%;border-collapse:collapse;font-size:.92rem;min-width:520px}
+table.jadwal th{background:var(--blue-900);color:#fff;padding:.9rem 1rem;text-align:left;font-weight:700}
+table.jadwal td{padding:.85rem 1rem;border-bottom:1px solid var(--line)}
+table.jadwal tr:last-child td{border-bottom:none}
+table.jadwal tr:nth-child(even){background:#f8fafd}
+.badge-hari{display:inline-block;background:var(--blue-50);color:var(--blue-700);border:1px solid var(--blue-100);font-weight:700;font-size:.78rem;padding:.2rem .7rem;border-radius:999px}
+.kal-item{display:flex;gap:1rem;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:.8rem;box-shadow:var(--shadow-sm)}
+.kal-tgl{flex-shrink:0;width:64px;text-align:center;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:12px;padding:.5rem 0}
+.kal-tgl b{display:block;font-size:1.3rem;color:var(--blue-800);line-height:1.1}
+.kal-tgl span{font-size:.72rem;color:var(--mute);text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <div class="tb-item" id="tb-alamat">📍 Jl. Raya Klambu, Desa Klambu, Kec. Klambu, Kab. Grobogan, Jawa Tengah</div>
+    <div class="tb-right">
+      <span class="tb-item" id="tb-email">✉ sdn1klambu@gmail.com</span>
+      <span class="tb-item" id="tb-telp">☎ (0292) 123-456</span>
+    </div>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo.svg" alt="Logo SDN 1 Klambu">
+      <span class="brand-text">
+        <strong>SDN 1 KLAMBU</strong>
+        <span>Kabupaten Grobogan · Jawa Tengah</span>
+      </span>
+    </a>
+    <nav class="menu">
+      <a href="index.html">Beranda</a>
+      <a href="profil.html">Profil</a>
+      <a href="jadwal.html" class="active">Jadwal</a>
+      <a href="berita.html">Berita</a>
+      <a href="galeri.html">Galeri</a>
+      <a href="ppdb.html">PPDB</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+    <button class="burger" aria-label="Buka menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="crumbs"><a href="index.html">Beranda</a> / Jadwal &amp; Kalender</div>
+    <h1>Jadwal Pelajaran &amp; Kalender Sekolah</h1>
+    <p>Jadwal belajar kelas 1–6 dan agenda penting Tahun Ajaran 2026/2027.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="container">
+    <div class="sec-head">
+      <span class="kicker">Kelas 1–6</span>
+      <h2>Jadwal Pelajaran</h2>
+      <p>Pilih kelas untuk melihat jadwal belajar mingguan.</p>
+    </div>
+    <div class="jadwal-tabs" id="jadwalTabs"></div>
+    <div class="tbl-wrap">
+      <table class="jadwal">
+        <thead><tr><th>Hari</th><th>Jam</th><th>Mata Pelajaran</th><th>Guru</th></tr></thead>
+        <tbody id="jadwalBody"><tr><td colspan="4" style="text-align:center;color:var(--mute)">Memuat jadwal…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="background:#eef3fb">
+  <div class="container">
+    <div class="sec-head">
+      <span class="kicker">Agenda</span>
+      <h2>Kalender Sekolah</h2>
+      <p>Tanggal-tanggal penting sepanjang tahun ajaran.</p>
+    </div>
+    <div id="kalenderList" style="max-width:720px;margin:auto"><p style="text-align:center;color:var(--mute)">Memuat kalender…</p></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-main">
+      <div>
+        <div class="f-brand">
+          <img src="assets/img/logo.svg" alt="Logo SDN 1 Klambu">
+          <div><strong>SDN 1 KLAMBU</strong><span>Grobogan · Jawa Tengah</span></div>
+        </div>
+        <p style="font-size:.9rem">Sekolah Dasar Negeri 1 Klambu — mencerdaskan, membina karakter, dan mengabdi untuk pendidikan anak negeri.</p>
+      </div>
+      <div>
+        <h4>Tautan Cepat</h4>
+        <ul>
+          <li><a href="profil.html">Profil Sekolah</a></li>
+          <li><a href="jadwal.html">Jadwal Pelajaran</a></li>
+          <li><a href="berita.html">Berita &amp; Artikel</a></li>
+          <li><a href="galeri.html">Galeri Kegiatan</a></li>
+          <li><a href="ppdb.html">PPDB Online</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Informasi</h4>
+        <ul>
+          <li><a href="ppdb.html">Jadwal PPDB 2026</a></li>
+          <li><a href="kontak.html">Lokasi &amp; Kontak</a></li>
+          <li><a href="kontak.html">Kotak Saran</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontak</h4>
+        <ul id="ft-kontak">
+          <li>📍 Jl. Raya Klambu, Desa Klambu, Kec. Klambu, Kab. Grobogan, Jawa Tengah 58155</li>
+          <li>✉ sdn1klambu@gmail.com</li>
+          <li>☎ (0292) 123-456</li>
+          <li>🕐 Senin–Kamis 07.00–14.00 WIB</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="tahun">2026</span> SDN 1 Klambu. Hak cipta dilindungi.</span>
+      <span class="credit">Designed by <strong>Kang Zaed</strong></span>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Kembali ke atas">↑</button>
+<a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16 2C8.3 2 2 8.3 2 16c0 2.5.7 4.9 1.9 7L2 30l7.2-1.9c2 1.1 4.3 1.7 6.8 1.7 7.7 0 14-6.3 14-14S23.7 2 16 2zm8.1 19.4c-.3.9-1.8 1.8-2.5 1.9-.6.1-1.4.2-2.3-.2-.5-.2-1.2-.4-2.1-.8-3.7-1.6-6.1-5.4-6.3-5.6-.2-.2-1.5-2-1.5-3.8 0-1.8.9-2.7 1.3-3.1.3-.4.7-.4 1-.4h.7c.2 0 .5-.1.8.6.3.8 1.1 2.6 1.2 2.8.1.2.2.4 0 .7-.1.2-.2.4-.4.7l-.6.7c-.2.2-.4.4-.2.8.2.4 1 1.7 2.2 2.7 1.5 1.4 2.8 1.8 3.2 2 .4.2.6.2.9-.1.2-.3 1-1.2 1.3-1.6.3-.4.5-.3.9-.2.4.1 2.4 1.1 2.8 1.3.4.2.7.3.8.5.1.2.1 1-.2 1.9z"/></svg>
+</a>
+
+<script src="js/main.js"></script>
+<script src="js/situs-loader.js"></script>
+<script>
+(async function(){
+  let jadwal;
+  try{
+    jadwal = await (await fetch('/api/jadwal?t='+Date.now())).json();
+  }catch{ jadwal = {kelas:{}, kalender:[]}; }
+
+  const kelasKeys = Object.keys(jadwal.kelas||{}).sort();
+  const tabs = document.getElementById('jadwalTabs');
+  const body = document.getElementById('jadwalBody');
+
+  function tampil(k){
+    tabs.querySelectorAll('.jadwal-tab').forEach(b=>b.classList.toggle('active', b.dataset.k===k));
+    const rows = (jadwal.kelas[k]||[]);
+    body.innerHTML = rows.length ? rows.map(r=>`
+      <tr><td><span class="badge-hari">${r.hari}</span></td><td>${r.jam}</td><td><strong>${r.mapel}</strong></td><td>${r.guru||'—'}</td></tr>`).join('')
+      : '<tr><td colspan="4" style="text-align:center;color:var(--mute)">Belum ada jadwal untuk kelas ini.</td></tr>';
+  }
+  tabs.innerHTML = kelasKeys.map(k=>`<button class="jadwal-tab" data-k="${k}">Kelas ${k}</button>`).join('');
+  tabs.querySelectorAll('.jadwal-tab').forEach(b=>b.addEventListener('click',()=>tampil(b.dataset.k)));
+  if(kelasKeys.length) tampil(kelasKeys[0]);
+
+  const bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  const kl = document.getElementById('kalenderList');
+  const kal = (jadwal.kalender||[]);
+  kl.innerHTML = kal.length ? kal.map(item=>{
+    const d = new Date(item.tanggal);
+    return `<div class="kal-item">
+      <div class="kal-tgl"><b>${isNaN(d)?'—':d.getDate()}</b><span>${isNaN(d)?'':bulan[d.getMonth()]}</span></div>
+      <div><strong>${item.kegiatan}</strong><div style="font-size:.82rem;color:var(--mute)">${isNaN(d)?item.tanggal:d.toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div></div>
+    </div>`;
+  }).join('') : '<p style="text-align:center;color:var(--mute)">Belum ada agenda.</p>';
+})();
+</script>
+</body>
+</html>

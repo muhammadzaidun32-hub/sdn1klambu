@@ -1,0 +1,80 @@
+{
+  "kelas": {
+    "1": [
+      {
+        "hari": "Senin",
+        "jam": "07.00-08.30",
+        "mapel": "Matematika",
+        "guru": "Siti Aminah, S.Pd.SD"
+      },
+      {
+        "hari": "Senin",
+        "jam": "08.30-10.00",
+        "mapel": "Bahasa Indonesia",
+        "guru": "Siti Aminah, S.Pd.SD"
+      },
+      {
+        "hari": "Selasa",
+        "jam": "07.00-08.30",
+        "mapel": "Pendidikan Agama",
+        "guru": ""
+      },
+      {
+        "hari": "Rabu",
+        "jam": "07.00-09.00",
+        "mapel": "Tematik",
+        "guru": ""
+      }
+    ],
+    "2": [
+      {
+        "hari": "Senin",
+        "jam": "07.00-08.30",
+        "mapel": "Matematika",
+        "guru": ""
+      }
+    ],
+    "3": [
+      {
+        "hari": "Senin",
+        "jam": "07.00-08.30",
+        "mapel": "Matematika",
+        "guru": ""
+      }
+    ],
+    "4": [
+      {
+        "hari": "Senin",
+        "jam": "07.00-08.30",
+        "mapel": "Matematika",
+        "guru": "Bambang Prawiro, S.Pd."
+      }
+    ],
+    "5": [
+      {
+        "hari": "Senin",
+        "jam": "07.00-08.30",
+        "mapel": "Matematika",
+        "guru": ""
+      }
+    ],
+    "6": [
+      {
+        "hari": "Senin",
+        "jam": "07.00-08.30",
+        "mapel": "Matematika",
+        "guru": "Dwi Lestari, S.Pd.SD"
+      }
+    ]
+  },
+  "kalender": [
+    {
+      "tanggal": "2026-07-13",
+      "kegiatan": "Hari pertama masuk sekolah TA 2026/2027"
+    },
+    {
+      "tanggal": "2026-08-17",
+      "kegiatan": "Upacara HUT RI ke-81"
+    }
+  ]
+}

@@ -35,6 +35,7 @@
     <nav class="menu">
       <a href="index.html">Beranda</a>
       <a href="profil.html">Profil</a>
+      <a href="jadwal.html">Jadwal</a>
       <a href="berita.html">Berita</a>
       <a href="fasilitas.html">Fasilitas</a>
       <a href="galeri.html">Galeri</a>
@@ -53,6 +54,51 @@
   </div>
 </section>
 
+<!-- ==== FORM PENDAFTARAN ONLINE ==== -->
+<section class="sec" style="padding-top:1rem">
+  <div class="container" style="max-width:820px">
+    <div class="info-panel" id="formPendaftaran">
+      <h3>📝 Formulir Pendaftaran Siswa Baru</h3>
+      <p style="font-size:.88rem;color:var(--mute);margin-bottom:1.2rem">Isi data di bawah ini. Setelah mendaftar, simpan <strong>Kode Pendaftaran</strong> untuk mengecek status dan mencetak bukti.</p>
+      <form id="ppdbForm">
+        <div class="form-group"><label>Nama Lengkap Calon Siswa *</label><input class="input" name="nama" required placeholder="cth: Aisyah Putri"></div>
+        <div class="form-group"><label>NISN <small>(jika ada)</small></label><input class="input" name="nisn" placeholder="10 digit"></div>
+        <div class="form-group"><label>Tanggal Lahir *</label><input class="input" type="date" name="lahir" required></div>
+        <div class="form-group"><label>Asal TK / PAUD</label><input class="input" name="asal" placeholder="cth: TK Aisyiyah Klambu"></div>
+        <div class="form-group"><label>Nama Orang Tua / Wali *</label><input class="input" name="wali" required placeholder="cth: Budi Santoso"></div>
+        <div class="form-group"><label>No. WhatsApp *</label><input class="input" name="wa" required placeholder="08xxxxxxxxxx"></div>
+        <div class="form-group"><label>Alamat</label><textarea class="input" name="alamat" rows="2" placeholder="Alamat lengkap"></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%">📨 Daftar Sekarang</button>
+      </form>
+      <div id="ppdbHasil" style="display:none;margin-top:1.4rem;padding:1.2rem;border-radius:14px;background:#ecfdf5;border:1px solid #a7f3d0">
+        <h4 style="color:#065f46;margin-bottom:.5rem">✅ Pendaftaran Berhasil!</h4>
+        <p style="font-size:.92rem">Kode Pendaftaran Anda:</p>
+        <div style="font-size:1.6rem;font-weight:800;color:#065f46;letter-spacing:.06em;margin:.4rem 0" id="kodeDaftar"></div>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1rem">
+          <button class="btn btn-gold btn-sm" onclick="cetakBukti()">🖨️ Cetak Bukti Pendaftaran</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==== CEK STATUS ==== -->
+    <div class="info-panel" style="margin-top:1.8rem" id="cekStatus">
+      <h3>🔍 Cek Status Pendaftaran</h3>
+      <p style="font-size:.88rem;color:var(--mute);margin-bottom:1rem">Masukkan kode pendaftaran Anda (cth: PPDB-ABC123).</p>
+      <div style="display:flex;gap:.7rem;flex-wrap:wrap">
+        <input class="input" id="cekKode" placeholder="PPDB-XXXXXX" style="flex:1;min-width:180px">
+        <button class="btn btn-primary" style="width:auto" onclick="cekStatus()">Cek</button>
+      </div>
+      <div id="hasilStatus" style="margin-top:1.2rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==== MODAL CETAK BUKTI ==== -->
+<div id="buktiModal" style="display:none;position:fixed;inset:0;background:rgba(5,12,30,.6);z-index:3000;place-items:center;padding:1rem">
+  <div style="background:#fff;border-radius:18px;max-width:520px;width:100%;padding:2.2rem" id="buktiIsi"></div>
+</div>
+
+<script>
 <section class="sec">
   <div class="container">
     <div class="sec-head reveal">
@@ -166,5 +212,69 @@
 
 <script src="js/main.js"></script>
 <script src="js/situs-loader.js"></script>
+
+<script>
+/* ============ PPDB Online ============ */
+const PPDB_API = '/api/ppdb';
+
+document.getElementById('ppdbForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const f = e.target;
+  const btn = f.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = 'Mengirim…';
+  const payload = {
+    action: 'daftar',
+    nama: f.nama.value, nisn: f.nisn.value, lahir: f.lahir.value,
+    asal: f.asal.value, wali: f.wali.value, wa: f.wa.value, alamat: f.alamat.value
+  };
+  try{
+    const res = await fetch(PPDB_API, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    const json = await res.json();
+    if(!res.ok) throw new Error(json.error || 'Gagal mendaftar');
+    document.getElementById('ppdbHasil').style.display = 'block';
+    document.getElementById('kodeDaftar').textContent = json.id;
+    f.reset();
+    toast('Pendaftaran berhasil! Simpan kode Anda.');
+  }catch(err){ toast(err.message, false); }
+  finally{ btn.disabled = false; btn.textContent = '📨 Daftar Sekarang'; }
+});
+
+async function cekStatus(){
+  const kode = document.getElementById('cekKode').value.trim();
+  const out = document.getElementById('hasilStatus');
+  if(!kode){ out.innerHTML = '<p style="color:#b91c1c">Masukkan kode dulu.</p>'; return; }
+  try{
+    const res = await fetch(PPDB_API + '?id=' + encodeURIComponent(kode));
+    const json = await res.json();
+    if(!res.ok) throw new Error(json.error || 'Tidak ditemukan');
+    out.innerHTML = `<div class="kal-item"><div class="kal-tgl"><b>${json.status==='Menunggu verifikasi'?'⏳':'✅'}</b></div>
+      <div><strong>${json.nama}</strong><div style="font-size:.85rem;color:var(--mute)">Status: ${json.status}</div></div></div>`;
+  }catch(err){ out.innerHTML = `<p style="color:#b91c1c">${err.message}</p>`; }
+}
+
+function cetakBukti(){
+  const kode = document.getElementById('kodeDaftar').textContent;
+  const w = window.open('', '_blank', 'width=640,height=760');
+  w.document.write(`<html><head><title>Bukti Pendaftaran ${kode}</title>
+  <style>body{font-family:Segoe UI,Arial,sans-serif;padding:36px;color:#1e293b}
+  h1{color:#0f2a5c;font-size:1.3rem;margin-bottom:.2rem}
+  .kode{font-size:2rem;font-weight:800;letter-spacing:.05em;color:#065f46;margin:1rem 0;padding:.8rem 1.2rem;background:#ecfdf5;border:2px dashed #10b981;border-radius:12px;display:inline-block}
+  table{border-collapse:collapse;width:100%;margin-top:1.2rem}
+  td{padding:.45rem .6rem;border-bottom:1px solid #e2e8f0}
+  td:first-child{color:#64748b;width:180px}
+  .ttd{margin-top:3rem;text-align:right}
+  @media print{ button{display:none} }</style></head><body>
+  <h1>Bukti Pendaftaran PPDB ${'2026/2027'}</h1>
+  <p style="color:#64748b">SD Negeri 1 Klambu — Kec. Klambu, Kab. Grobogan</p>
+  <div class="kode">${kode}</div>
+  <table><tbody>
+  </tbody></table>
+  <p style="font-size:.85rem;color:#64748b">Simpan halaman ini / foto kode di atas sebagai bukti. Tunjukkan saat verifikasi berkas di sekolah.</p>
+  <div class="ttd"><p>Klambu, ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}<br><br><br><strong>Panitia PPDB</strong></p></div>
+  <script>window.print()<\/script>
+  </body></html>`);
+  w.document.close();
+}
+</script>
 </body>
 </html>
