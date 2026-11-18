@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Perpustakaan flat illustration -->
+  <defs>
+    <linearGradient id="bgp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf2f8"/><stop offset="1" stop-color="#fce7f3"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bgp)"/>
+
+  <!-- bookshelf big -->
+  <rect x="90" y="120" width="340" height="380" rx="14" fill="#92400e"/>
+  <g>
+    <rect x="110" y="150" width="40" height="110" rx="5" fill="#ef4444"/>
+    <rect x="155" y="165" width="40" height="95" rx="5" fill="#22c55e"/>
+    <rect x="200" y="145" width="40" height="115" rx="5" fill="#3b82f6"/>
+    <rect x="245" y="170" width="40" height="90" rx="5" fill="#f59e0b"/>
+    <rect x="290" y="155" width="40" height="105" rx="5" fill="#a855f7"/>
+    <rect x="335" y="168" width="40" height="92" rx="5" fill="#14b8a6"/>
+    <rect x="380" y="150" width="40" height="112" rx="5" fill="#f97316"/>
+    <rect x="110" y="300" width="40" height="105" rx="5" fill="#0ea5e9"/>
+    <rect x="155" y="315" width="40" height="90" rx="5" fill="#e11d48"/>
+    <rect x="200" y="298" width="40" height="108" rx="5" fill="#7c3aed"/>
+    <rect x="245" y="320" width="40" height="86" rx="5" fill="#22c55e"/>
+    <rect x="290" y="306" width="40" height="100" rx="5" fill="#f59e0b"/>
+    <rect x="335" y="312" width="40" height="94" rx="5" fill="#3b82f6"/>
+    <rect x="380" y="300" width="40" height="106" rx="5" fill="#14b8a6"/>
+    <rect x="106" y="276" width="318" height="14" fill="#b45309"/>
+    <rect x="106" y="430" width="318" height="14" fill="#b45309"/>
+    <rect x="110" y="450" width="40" height="40" rx="5" fill="#facc15"/>
+    <rect x="155" y="456" width="40" height="34" rx="5" fill="#fb7185"/>
+    <rect x="200" y="448" width="40" height="42" rx="5" fill="#38bdf8"/>
+  </g>
+
+  <!-- reading table -->
+  <rect x="470" y="420" width="260" height="18" rx="9" fill="#b45309"/>
+  <rect x="486" y="438" width="16" height="70" fill="#92400e"/>
+  <rect x="698" y="438" width="16" height="70" fill="#92400e"/>
+
+  <!-- reading kid -->
+  <g transform="translate(560 380)">
+    <circle cx="0" cy="-60" r="40" fill="#fcd0ae"/>
+    <path d="M-40 -64 A40 40 0 0 1 40 -64 L40 -82 A40 40 0 0 0 -40 -82 Z" fill="#2b1a10"/>
+    <path d="M-16 -84 q16 14 32 0 q6 30 -16 52 q-22 -22 -16 -52" fill="#2b1a10"/>
+    <circle cx="-14" cy="-64" r="5" fill="#1f2937"/>
+    <circle cx="14" cy="-64" r="5" fill="#1f2937"/>
+    <path d="M-36 -78 L-40 -96 M36 -78 L40 -96" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+    <rect x="-46" y="-14" width="92" height="110" rx="28" fill="#0d9488"/>
+    <!-- open book -->
+    <path d="M-70 30 C-40 16 -10 16 0 26 C10 16 40 16 70 30 L70 78 C40 64 10 64 0 74 C-10 64 -40 64 -70 78 Z" fill="#fff" stroke="#cbd5e1" stroke-width="4"/>
+    <line x1="0" y1="26" x2="0" y2="74" stroke="#cbd5e1" stroke-width="4"/>
+  </g>
+
+  <!-- lamp & plant -->
+  <g transform="translate(720 200)">
+    <rect x="-6" y="60" width="12" height="120" fill="#64748b"/>
+    <path d="M-40 60 L40 60 L24 20 L-24 20 Z" fill="#f59e0b"/>
+  </g>
+  <g transform="translate(60 540)">
+    <rect x="-20" y="0" width="40" height="34" rx="8" fill="#b45309"/>
+    <path d="M0 0 C-6 -34 -26 -40 -30 -44 C-6 -44 0 -22 0 -22 C0 -22 6 -44 30 -44 C26 -40 6 -34 0 0 Z" fill="#4f9d5d"/>
+  </g>
+</svg>

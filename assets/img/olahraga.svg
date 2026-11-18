@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700">
+  <!-- Olahraga / ekstrakurikuler flat illustration -->
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eff6ff"/><stop offset="1" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="700" fill="url(#bg4)"/>
+
+  <!-- fence / tribun -->
+  <rect x="0" y="300" width="900" height="16" fill="#94a3b8" opacity="0.5"/>
+  <g fill="#94a3b8" opacity="0.35">
+    <rect x="40" y="300" width="10" height="70"/><rect x="120" y="300" width="10" height="70"/>
+    <rect x="200" y="300" width="10" height="70"/><rect x="280" y="300" width="10" height="70"/>
+    <rect x="360" y="300" width="10" height="70"/><rect x="440" y="300" width="10" height="70"/>
+    <rect x="520" y="300" width="10" height="70"/><rect x="600" y="300" width="10" height="70"/>
+    <rect x="680" y="300" width="10" height="70"/><rect x="760" y="300" width="10" height="70"/>
+    <rect x="840" y="300" width="10" height="70"/>
+  </g>
+
+  <!-- futsal goal -->
+  <g stroke="#1e40af" stroke-width="12" fill="none">
+    <path d="M620 420 V300 H820 V420"/>
+    <path d="M620 300 L820 420 M820 300 L620 420" stroke-width="4" opacity="0.4"/>
+  </g>
+
+  <!-- ball -->
+  <circle cx="480" cy="560" r="34" fill="#fff" stroke="#1f2937" stroke-width="5"/>
+  <path d="M480 534 L494 552 L488 574 L472 574 L466 552 Z" fill="#1f2937"/>
+  <circle cx="720" cy="588" r="26" fill="#fff" stroke="#1f2937" stroke-width="5"/>
+  <path d="M720 568 L731 582 L726 599 L714 599 L709 582 Z" fill="#1f2937"/>
+
+  <!-- running kid 1 -->
+  <g transform="translate(240 520)">
+    <circle cx="0" cy="-56" r="30" fill="#fcd0ae"/>
+    <path d="M-30 -60 A30 30 0 0 1 30 -60 L30 -74 A30 30 0 0 0 -30 -74 Z" fill="#111827"/>
+    <circle cx="-10" cy="-60" r="4" fill="#1f2937"/><circle cx="10" cy="-60" r="4" fill="#1f2937"/>
+    <path d="M-9 -46 Q0 -38 9 -46" stroke="#1f2937" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <rect x="-34" y="-22" width="68" height="84" rx="22" fill="#f59e0b"/>
+    <path d="M-30 62 L-52 108 M-30 62 L-6 108 M6 62 L-12 108 M6 62 L30 108" stroke="#1e3a8a" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-30 -6 L-66 22 M38 -6 L66 -32" stroke="#e8b48c" stroke-width="14" stroke-linecap="round"/>
+  </g>
+
+  <!-- running kid 2 -->
+  <g transform="translate(430 540)">
+    <circle cx="0" cy="-52" r="28" fill="#e8b48c"/>
+    <path d="M-28 -56 A28 28 0 0 1 28 -56 L28 -70 A28 28 0 0 0 -28 -70 Z" fill="#4c2a12"/>
+    <rect x="-32" y="-20" width="64" height="80" rx="20" fill="#dc2626"/>
+    <path d="M-28 58 L-48 100 M-28 58 L-4 100 M4 58 L-14 100 M4 58 L28 100" stroke="#334155" stroke-width="15" stroke-linecap="round"/>
+    <path d="M-28 -4 L-60 18 M34 -4 L60 -28" stroke="#e8b48c" stroke-width="13" stroke-linecap="round"/>
+  </g>
+
+  <!-- ground -->
+  <rect y="640" width="900" height="60" fill="#86c27d"/>
+  <line x1="0" y1="640" x2="900" y2="640" stroke="#6aa85e" stroke-width="4"/>
+</svg>

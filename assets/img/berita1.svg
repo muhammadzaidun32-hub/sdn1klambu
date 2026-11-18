@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Berita: Hari Anak Nasional -->
+  <rect width="800" height="600" fill="#fef9c3"/>
+  <circle cx="700" cy="80" r="46" fill="#fbbf24"/>
+  <path d="M0 470 Q400 420 800 470 V600 H0 Z" fill="#86c27d"/>
+  <!-- bunting flags -->
+  <g>
+    <path d="M40 40 L80 40 L60 84 Z" fill="#ef4444"/>
+    <path d="M120 60 L160 60 L140 104 Z" fill="#3b82f6"/>
+    <path d="M200 36 L240 36 L220 80 Z" fill="#22c55e"/>
+    <path d="M280 58 L320 58 L300 102 Z" fill="#f59e0b"/>
+    <path d="M360 40 L400 40 L380 84 Z" fill="#a855f7"/>
+    <path d="M440 60 L480 60 L460 104 Z" fill="#ec4899"/>
+    <path d="M520 36 L560 36 L540 80 Z" fill="#14b8a6"/>
+    <path d="M600 55 L640 55 L620 99 Z" fill="#f97316"/>
+  </g>
+  <!-- kids jumping -->
+  <g transform="translate(260 380)">
+    <circle cx="0" cy="-60" r="34" fill="#fcd0ae"/>
+    <path d="M-34 -64 A34 34 0 0 1 34 -64 L34 -80 A34 34 0 0 0 -34 -80 Z" fill="#111827"/>
+    <rect x="-40" y="-20" width="80" height="96" rx="24" fill="#ef4444"/>
+    <path d="M-36 76 L-52 128 M-36 76 L-16 128 M4 76 L-12 128 M4 76 L28 128" stroke="#1e3a8a" stroke-width="16" stroke-linecap="round"/>
+    <path d="M-36 -6 L-72 -30 M36 -6 L72 -30" stroke="#fcd0ae" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(520 395)">
+    <circle cx="0" cy="-56" r="32" fill="#e8b48c"/>
+    <path d="M-32 -46 A32 32 0 0 1 32 -46 L32 -62 A32 32 0 0 0 -32 -62 Z" fill="#4c2a12"/>
+    <path d="M-12 -76 q12 10 24 0 q4 26 -12 44 q-16 -18 -12 -44" fill="#4c2a12"/>
+    <rect x="-38" y="-18" width="76" height="92" rx="24" fill="#2563eb"/>
+    <path d="M-34 74 L-50 124 M-34 74 L-14 124 M6 74 L-10 124 M6 74 L30 124" stroke="#334155" stroke-width="15" stroke-linecap="round"/>
+    <path d="M-34 -4 L-68 -26 M34 -4 L68 -26" stroke="#e8b48c" stroke-width="13" stroke-linecap="round"/>
+  </g>
+  <!-- balloons -->
+  <g>
+    <path d="M120 400 q3 -60 3 -80" stroke="#94a3b8" stroke-width="3" fill="none"/>
+    <ellipse cx="123" cy="300" rx="26" ry="32" fill="#ef4444"/>
+    <path d="M210 420 q3 -60 3 -80" stroke="#94a3b8" stroke-width="3" fill="none"/>
+    <ellipse cx="213" cy="320" rx="26" ry="32" fill="#3b82f6"/>
+  </g>
+</svg>

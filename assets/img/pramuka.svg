@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700">
+  <!-- Pramuka flat illustration -->
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffbeb"/><stop offset="1" stop-color="#fef3c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="700" fill="url(#bg3)"/>
+  <circle cx="120" cy="110" r="52" fill="#fbbf24" opacity="0.9"/>
+  <ellipse cx="700" cy="90" rx="100" ry="32" fill="#fff" opacity="0.9"/>
+
+  <!-- tent -->
+  <path d="M480 420 L640 300 L800 420 Z" fill="#dc2626"/>
+  <path d="M480 420 L640 300 L640 420 Z" fill="#b91c1c"/>
+  <path d="M600 420 L640 360 L680 420 Z" fill="#7f1d1d"/>
+  <rect x="470" y="418" width="340" height="12" rx="6" fill="#92400e"/>
+
+  <!-- campfire -->
+  <g transform="translate(300 520)">
+    <rect x="-46" y="0" width="92" height="12" rx="6" fill="#92400e" transform="rotate(14)"/>
+    <rect x="-46" y="0" width="92" height="12" rx="6" fill="#7c2d12" transform="rotate(-14)"/>
+    <path d="M0 -78 C20 -52 30 -36 30 -18 A30 32 0 1 1 -30 -18 C-30 -36 -20 -52 0 -78 Z" fill="#f97316"/>
+    <path d="M0 -50 C10 -36 15 -26 15 -14 A15 17 0 1 1 -15 -14 C-15 -26 -10 -36 0 -50 Z" fill="#fbbf24"/>
+  </g>
+
+  <!-- flag ceremony line -->
+  <rect x="120" y="240" width="8" height="200" rx="4" fill="#94a3b8"/>
+  <path d="M128 244 L212 262 L128 282 Z" fill="#e11d48"/>
+
+  <!-- scouts -->
+  <g transform="translate(180 520)">
+    <circle cx="0" cy="-40" r="30" fill="#e8b48c"/>
+    <path d="M-30 -44 A30 30 0 0 1 30 -44 L30 -58 A30 30 0 0 0 -30 -58 Z" fill="#1f2937"/>
+    <rect x="-36" y="-6" width="72" height="92" rx="22" fill="#8a5a33"/>
+    <rect x="-36" y="14" width="72" height="14" fill="#dc2626"/>
+    <rect x="-36" y="14" width="20" height="14" fill="#fff"/><rect x="-36" y="14" width="14" height="14" fill="#dc2626"/>
+  </g>
+  <g transform="translate(300 528)">
+    <circle cx="0" cy="-38" r="30" fill="#fcd0ae"/>
+    <path d="M-30 -42 A30 30 0 0 1 30 -42 L30 -56 A30 30 0 0 0 -30 -56 Z" fill="#4c2a12"/>
+    <rect x="-36" y="-4" width="72" height="92" rx="22" fill="#a16207"/>
+    <rect x="-36" y="16" width="72" height="14" fill="#dc2626"/>
+    <rect x="-36" y="16" width="20" height="14" fill="#fff"/><rect x="-36" y="16" width="14" height="14" fill="#dc2626"/>
+    <rect x="28" y="-46" width="14" height="70" rx="7" fill="#fcd0ae" transform="rotate(-42 28 -46)"/>
+  </g>
+
+  <!-- ground -->
+  <rect y="600" width="900" height="100" fill="#86c27d"/>
+  <path d="M0 600 Q450 560 900 600 V700 H0 Z" fill="#95cf8b"/>
+
+  <!-- birds -->
+  <g stroke="#475569" stroke-width="4" fill="none" stroke-linecap="round">
+    <path d="M420 140 q13 -14 26 0 q13 -14 26 0"/>
+    <path d="M540 110 q11 -12 22 0 q11 -12 22 0"/>
+  </g>
+</svg>

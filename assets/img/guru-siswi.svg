@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ecfdf5"/><stop offset="1" stop-color="#d1fae5"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="700" fill="url(#bg2)"/>
+
+  <!-- sun & clouds -->
+  <circle cx="790" cy="90" r="50" fill="#fbbf24" opacity="0.85"/>
+  <ellipse cx="200" cy="90" rx="90" ry="30" fill="#fff" opacity="0.9"/>
+  <ellipse cx="290" cy="105" rx="60" ry="24" fill="#fff" opacity="0.8"/>
+
+  <!-- ground -->
+  <rect y="520" width="900" height="180" fill="#86c27d"/>
+  <path d="M0 520 Q450 470 900 520 V700 H0 Z" fill="#95cf8b"/>
+
+  <!-- tree -->
+  <rect x="70" y="380" width="20" height="90" rx="9" fill="#8a5a33"/>
+  <circle cx="80" cy="350" r="62" fill="#4f9d5d"/>
+  <circle cx="45" cy="385" r="38" fill="#57a866"/>
+  <circle cx="118" cy="385" r="40" fill="#57a866"/>
+
+  <!-- big teacher -->
+  <g transform="translate(300 420)">
+    <circle cx="0" cy="-70" r="52" fill="#e8b48c"/>
+    <path d="M-52 -78 A52 52 0 0 1 52 -78 L54 -98 A52 52 0 0 0 -54 -98 Z" fill="#1f2937"/>
+    <circle cx="-17" cy="-76" r="5" fill="#1f2937"/>
+    <circle cx="17" cy="-76" r="5" fill="#1f2937"/>
+    <path d="M-14 -54 Q0 -42 14 -54" stroke="#1f2937" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="-66" y="-14" width="132" height="160" rx="38" fill="#0f2a5c"/>
+    <rect x="-110" y="-4" width="40" height="120" rx="19" fill="#0f2a5c" transform="rotate(24 -110 -4)"/>
+    <rect x="72" y="-20" width="18" height="100" rx="9" fill="#e8b48c" transform="rotate(-34 72 -20)"/>
+    <rect x="96" y="-92" width="10" height="92" rx="5" fill="#94a3b8" transform="rotate(-34 96 -20)"/>
+  </g>
+
+  <!-- students with flag & hand raised -->
+  <g transform="translate(560 470)">
+    <circle cx="0" cy="-38" r="32" fill="#fcd0ae"/>
+    <path d="M-32 -42 A32 32 0 0 1 32 -42 L32 -56 A32 32 0 0 0 -32 -56 Z" fill="#4c2a12"/>
+    <circle cx="-11" cy="-42" r="4" fill="#1f2937"/>
+    <circle cx="11" cy="-42" r="4" fill="#1f2937"/>
+    <path d="M-9 -26 Q0 -18 9 -26" stroke="#1f2937" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <rect x="-38" y="0" width="76" height="96" rx="24" fill="#dc2626"/>
+    <rect x="30" y="-30" width="14" height="66" rx="7" fill="#fcd0ae" transform="rotate(-40 30 -30)"/>
+  </g>
+  <g transform="translate(700 480)">
+    <circle cx="0" cy="-38" r="32" fill="#e8b48c"/>
+    <path d="M-32 -42 A32 32 0 0 1 32 -42 L34 -58 A32 32 0 0 0 -34 -58 Z" fill="#111827"/>
+    <rect x="-38" y="0" width="76" height="96" rx="24" fill="#2563eb"/>
+  </g>
+
+  <!-- girl holding small flag -->
+  <g transform="translate(430 500)">
+    <rect x="34" y="-120" width="6" height="130" rx="3" fill="#94a3b8"/>
+    <path d="M40 -118 L96 -104 L40 -88 Z" fill="#e11d48"/>
+    <circle cx="0" cy="-30" r="28" fill="#fcd0ae"/>
+    <path d="M-28 -26 A28 28 0 0 1 28 -26 L28 -40 A28 28 0 0 0 -28 -40 Z" fill="#4c2a12"/>
+    <path d="M-14 -46 q14 12 28 0 q4 26 -14 46 q-18 -20 -14 -46" fill="#4c2a12"/>
+    <rect x="-32" y="0" width="64" height="84" rx="22" fill="#7c3aed"/>
+  </g>
+
+  <!-- flowers -->
+  <g>
+    <circle cx="820" cy="560" r="10" fill="#f59e0b"/>
+    <rect x="816" y="568" width="8" height="26" fill="#4f9d5d"/>
+    <circle cx="860" cy="588" r="10" fill="#e11d48"/>
+    <rect x="856" y="596" width="8" height="24" fill="#4f9d5d"/>
+    <circle cx="60" cy="600" r="10" fill="#a855f7"/>
+    <rect x="56" y="608" width="8" height="24" fill="#4f9d5d"/>
+  </g>
+
+  <!-- small "SD" BB标志? no—keep clean -->
+</svg>

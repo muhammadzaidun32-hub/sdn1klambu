@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- SDN 1 Klambu school emblem -->
+  <defs>
+    <linearGradient id="gradBook" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="gradShield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e40af"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer shield -->
+  <path d="M256 16 L476 64 V280 C476 416 372 468 256 496 C140 468 76 416 36 280 V64 Z"
+        fill="url(#gradShield)" stroke="#fbbf24" stroke-width="14"/>
+  <!-- Inner subtle ring -->
+  <path d="M256 44 L448 82 V282 C448 400 356 444 256 468 C156 444 64 400 64 282 V64 Z"
+        fill="none" stroke="#ffffff" stroke-width="3" opacity="0.35"/>
+  <!-- Open book -->
+  <g transform="translate(256 356)">
+    <path d="M-150 -10 C-110 -30 -60 -30 -8 -8 L-8 52 C-60 30 -110 30 -150 50 Z" fill="#ffffff"/>
+    <path d="M150 -10 C110 -30 60 -30 -8 -8 L-8 52 C60 30 110 30 150 50 Z" fill="#e8eef9"/>
+    <path d="M-150 -10 C-110 -30 -60 -30 -8 -8 L-8 42 C-60 24 -110 24 -150 40 Z" fill="#f8fafc"/>
+    <path d="M150 -10 C110 -30 60 -30 -8 -8 L-8 42 C60 24 110 24 150 40 Z" fill="#dbe7f7"/>
+    <g stroke="#94a3b8" stroke-width="4" stroke-linecap="round">
+      <line x1="-128" y1="8" x2="-56" y2="18"/>
+      <line x1="-128" y1="30" x2="-56" y2="40"/>
+      <line x1="128" y1="8" x2="52" y2="18"/>
+      <line x1="128" y1="30" x2="52" y2="40"/>
+    </g>
+  </g>
+  <!-- Torch of knowledge -->
+  <g transform="translate(256 150)">
+    <path d="M-9 60 C-14 100 -12 130 -8 150 L8 150 C12 130 14 100 9 60 Z" fill="#fbbf24"/>
+    <path d="M0 -92 C26 -66 42 -44 42 -20 A42 44 0 1 1 -42 -20 C-42 -44 -26 -66 0 -92 Z" fill="#f59e0b"/>
+    <path d="M0 -66 C10 -52 18 -40 18 -22 A18 20 0 1 1 -18 -22 C-18 -40 -14 -52 0 -66 Z" fill="#fef08a"/>
+  </g>
+  <!-- Star -->
+  <path d="M256 -18 L272 52 L344 60 L290 108 L304 178 L256 142 L208 178 L214 108 L166 60 L240 52 Z"
+        transform="translate(0 -6) scale(0.62) translate(256 148) translate(-256 -148)"
+        fill="none"/>
+  <!-- Text banners -->
+  <text x="256" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#ffffff" letter-spacing="2">SDN 1</text>
+  <text x="256" y="452" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="bold" fill="#ffffff" letter-spacing="4">KLAMBU</text>
+</svg>
