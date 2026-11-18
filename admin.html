@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — SDN 1 Klambu</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue-900:#0f2a5c;--blue-700:#1d4ed8;--blue-600:#2563eb;--blue-50:#eff6ff;--blue-100:#dbeafe;
+  --gold-500:#f59e0b;--gold-400:#fbbf24;--green-500:#10b981;--red-500:#ef4444;
+  --ink:#1e293b;--mute:#64748b;--bg:#f6f8fc;--card:#fff;--line:#e2e8f0;--radius:16px;
+  --shadow-sm:0 2px 10px rgba(15,42,92,.07);--shadow-md:0 10px 30px rgba(15,42,92,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:var(--blue-700);text-decoration:none}
+img{max-width:100%;display:block}
+
+/* login */
+.login-wrap{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue-900),var(--blue-600));padding:1.5rem}
+.login-card{background:#fff;border-radius:22px;padding:2.6rem;max-width:420px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.35);text-align:center}
+.login-card img{width:78px;margin:0 auto 1rem}
+.login-card h1{font-size:1.4rem;color:var(--blue-900);margin-bottom:.3rem}
+.login-card p{color:var(--mute);font-size:.9rem;margin-bottom:1.6rem}
+.input{width:100%;padding:.85rem 1.05rem;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:.95rem;background:#fbfdff;transition:.2s}
+.input:focus{outline:none;border-color:var(--blue-600);box-shadow:0 0 0 4px var(--blue-100)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.4rem;border:none;border-radius:12px;font:inherit;font-weight:700;cursor:pointer;transition:.2s}
+.btn-primary{background:linear-gradient(135deg,var(--blue-600),var(--blue-900));color:#fff;width:100%;box-shadow:0 8px 20px rgba(37,99,235,.3)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold-400),var(--gold-500));color:#3b2705}
+.btn-red{background:var(--red-500);color:#fff}
+.btn-sm{padding:.5rem .9rem;font-size:.85rem;border-radius:10px}
+.error-msg{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;padding:.7rem 1rem;border-radius:10px;font-size:.88rem;margin-top:1rem;display:none}
+
+/* dashboard */
+.header{background:var(--blue-900);color:#fff;padding:1rem 0}
+.header .wrap{width:min(1080px,94%);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.header .brand{display:flex;gap:.75rem;align-items:center}
+.header img{width:44px;height:44px}
+.header strong{display:block;font-size:1.05rem}
+.header span{font-size:.75rem;color:#9db6e4;letter-spacing:.05em}
+.dash{width:min(1080px,94%);margin:2rem auto 4rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:1.8rem;margin-bottom:1.6rem}
+.panel h2{font-size:1.15rem;color:var(--blue-900);margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+label{display:block;font-weight:600;font-size:.86rem;margin:.9rem 0 .35rem;color:var(--blue-900)}
+textarea.input{resize:vertical;min-height:110px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-actions{display:flex;gap:.8rem;margin-top:1.4rem;flex-wrap:wrap}
+.hidden{display:none!important}
+
+/* preview upload */
+.up-zone{border:2px dashed var(--line);border-radius:14px;padding:1.2rem;text-align:center;color:var(--mute);font-size:.9rem;cursor:pointer;transition:.2s;margin-top:.4rem}
+.up-zone:hover{border-color:var(--blue-600);color:var(--blue-700);background:var(--blue-50)}
+.up-preview{margin-top:.9rem;display:none}
+.up-preview img{max-height:180px;margin:auto;border-radius:10px;box-shadow:var(--shadow-sm)}
+
+/* list kegiatan */
+.keg-item{display:flex;gap:1.1rem;padding:1rem;border:1px solid var(--line);border-radius:14px;margin-bottom:.9rem;align-items:center;background:#fbfdff}
+.keg-item img{width:110px;height:78px;object-fit:cover;border-radius:10px;flex-shrink:0}
+.keg-item .info{flex:1;min-width:0}
+.keg-item h3{font-size:.98rem;color:var(--blue-900);line-height:1.35}
+.keg-item .meta{font-size:.78rem;color:var(--mute);margin:.25rem 0 .5rem}
+.keg-item .acts{display:flex;gap:.5rem;flex-shrink:0}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .6rem;border-radius:999px;background:var(--blue-50);color:var(--blue-700);border:1px solid var(--blue-100)}
+.toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:.8rem 1.5rem;border-radius:999px;font-size:.9rem;box-shadow:var(--shadow-md);transition:.35s;opacity:0;z-index:99}
+.toast.show{transform:translateX(-50%);opacity:1}
+@media(max-width:640px){.row{grid-template-columns:1fr}.keg-item{flex-direction:column;align-items:stretch}.keg-item .acts{justify-content:flex-end}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="login-wrap" id="loginView">
+  <div class="login-card">
+    <img src="assets/img/logo.svg" alt="Logo SDN 1 Klambu">
+    <h1>Admin SDN 1 Klambu</h1>
+    <p>Masukkan password untuk mengelola kegiatan terbaru</p>
+    <form id="loginForm">
+      <input class="input" type="password" id="pwd" placeholder="Password admin" autocomplete="current-password" required>
+      <div class="error-msg" id="loginErr">Password salah, coba lagi.</div>
+      <button class="btn btn-primary" style="margin-top:1.1rem" type="submit">🔒 MasukDashboard Admin</button>
+    </form>
+    <p style="margin-top:1.4rem;font-size:.8rem"><a href="index.html">← Kembali ke website</a></p>
+  </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="dashView" class="hidden">
+  <header class="header">
+    <div class="wrap">
+      <div class="brand">
+        <img src="assets/img/logo.svg" alt="">
+        <div><strong>Dashboard Admin</strong><span>SDN 1 KLAMBU · Kelola Kegiatan</span></div>
+      </div>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <a href="index.html" class="btn btn-sm" style="background:rgba(255,255,255,.14);color:#fff">Lihat Website ↗</a>
+        <button class="btn btn-sm btn-gold" id="logoutBtn">Keluar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash">
+    <!-- Form tambah/edit -->
+    <div class="panel">
+      <h2 id="formTitle">➕ Tambah Kegiatan Baru</h2>
+      <form id="kegForm">
+        <input type="hidden" id="itemId">
+        <div class="row">
+          <div>
+            <label for="fJudul">Judul Kegiatan *</label>
+            <input class="input" id="fJudul" required placeholder="cth: Lomba Ceria HUT RI ke-80">
+          </div>
+          <div>
+            <label for="fTanggal">Tanggal *</label>
+            <input class="input" id="fTanggal" type="date" required>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="fKategori">Kategori</label>
+            <select class="input" id="fKategori">
+              <option>Kegiatan</option>
+              <option>Prestasi</option>
+              <option>Kurikulum</option>
+              <option>Pengumuman</option>
+            </select>
+          </div>
+          <div>
+            <label for="fGambar">Foto Kegiatan</label>
+            <div class="up-zone" id="upZone">📷 Klik untuk pilih foto (JPG/PNG, maks 4MB)</div>
+            <input type="file" id="fGambar" accept="image/*" class="hidden">
+            <div class="up-preview" id="upPreview"><img alt="pratinjau"></div>
+            <input type="hidden" id="fGambarUrl">
+          </div>
+        </div>
+        <label for="fIsi">Isi / Ringkasan *</label>
+        <textarea class="input" id="fIsi" required placeholder="Tulis cerita atau ringkasan kegiatan..."></textarea>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" style="width:auto" id="saveBtn">💾 Simpan Kegiatan</button>
+          <button type="button" class="btn btn-sm" id="resetBtn" style="background:var(--line);color:var(--ink)">Bersihkan Form</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Daftar kegiatan -->
+    <div class="panel">
+      <h2>📋 Daftar Kegiatan <span class="badge" id="cnt">0</span></h2>
+      <div id="list">Memuat…</div>
+    </div>
+  </main>
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+const API = '/api/kegiatan';
+let sessionPwd = sessionStorage.getItem('adminPwd') || '';
+let editingId = null;
+
+const $ = s => document.querySelector(s);
+
+function toast(msg, ok=true){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.style.background = ok ? '#10b981' : '#ef4444';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+async function api(action, extra={}){
+  const res = await fetch(API, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-Admin-Password':sessionPwd},
+    body: JSON.stringify({action, ...extra})
+  });
+  const json = await res.json().catch(()=>({error:' Respons tidak valid'}));
+  if(!res.ok) throw new Error(json.error || 'Gagal terhubung');
+  return json;
+}
+
+/* ---------- LOGIN ---------- */
+$('#loginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  sessionPwd = $('#pwd').value;
+  try{
+    await api('check');
+    sessionStorage.setItem('adminPwd', sessionPwd);
+    showDash();
+  }catch(err){
+    $('#loginErr').style.display = 'block';
+  }
+});
+
+function showDash(){
+  $('#loginView').classList.add('hidden');
+  $('#dashView').classList.remove('hidden');
+  loadList();
+}
+
+$('#logoutBtn').addEventListener('click', ()=>{
+  sessionStorage.removeItem('adminPwd');
+  location.reload();
+});
+
+/* ---------- LIST ---------- */
+async function loadList(){
+  try{
+    const res = await fetch(API + '?t=' + Date.now());
+    const {items} = await res.json();
+    render(items);
+  }catch{ $('#list').textContent = 'Gagal memuat data.'; }
+}
+
+function esc(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+
+function render(items){
+  $('#cnt').textContent = items.length;
+  if(!items.length){ $('#list').innerHTML = '<p style="color:var(--mute)">Belum ada kegiatan. Tambahkan lewat form di atas.</p>'; return; }
+  $('#list').innerHTML = items.map(it=>`
+    <div class="keg-item">
+      ${it.gambar ? `<img src="${esc(it.gambar)}" alt="">` : `<div style="width:110px;height:78px;border-radius:10px;background:var(--blue-100);display:grid;place-items:center;font-size:1.6rem">🏫</div>`}
+      <div class="info">
+        <h3>${esc(it.judul)}</h3>
+        <div class="meta">${new Date(it.tanggal).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})} · ${esc(it.kategori||'Kegiatan')}</div>
+        <p style="font-size:.85rem;color:var(--mute)">${esc((it.isi||'').slice(0,120))}${(it.isi||'').length>120?'…':''}</p>
+      </div>
+      <div class="acts">
+        <button class="btn btn-sm" style="background:var(--blue-50);color:var(--blue-700);border:1px solid var(--blue-100)" onclick="editItem('${it.id}')">✏️ Edit</button>
+        <button class="btn btn-sm btn-red" onclick="delItem('${it.id}')">🗑 Hapus</button>
+      </div>
+    </div>`).join('');
+  window._items = Object.fromEntries(items.map(i=>[i.id,i]));
+}
+
+function editItem(id){
+  const it = window._items[id]; if(!it) return;
+  editingId = id;
+  $('#formTitle').textContent = '✏️ Edit Kegiatan';
+  $('#itemId').value = it.id;
+  $('#fJudul').value = it.judul || '';
+  $('#fTanggal').value = it.tanggal || '';
+  $('#fKategori').value = it.kategori || 'Kegiatan';
+  $('#fIsi').value = it.isi || '';
+  $('#fGambarUrl').value = it.gambar || '';
+  if(it.gambar){ $('#upPreview img').src = it.gambar; $('#upPreview').style.display='block'; }
+  window.scrollTo({top:0, behavior:'smooth'});
+  toast('Mode edit: ' + it.judul);
+}
+
+async function delItem(id){
+  if(!confirm('Yakin hapus kegiatan ini?')) return;
+  try{
+    await api('delete', {id});
+    toast('Kegiatan dihapus');
+    loadList();
+  }catch(e){ toast(e.message, false); }
+}
+
+/* ---------- UPLOAD ---------- */
+$('#upZone').addEventListener('click', ()=>$('#fGambar').click());
+$('#fGambar').addEventListener('change', async e=>{
+  const file = e.target.files[0]; if(!file) return;
+  if(file.size > 4*1024*1024){ toast('Maksimal 4MB', false); return; }
+  $('#upZone').textContent = '⏳ Mengunggah…';
+  const b64 = await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result.split(',')[1]); fr.readAsDataURL(file); });
+  try{
+    const {url} = await api('upload', {filename:file.name, dataBase64:b64});
+    $('#fGambarUrl').value = url;
+    $('#upPreview img').src = url; $('#upPreview').style.display='block';
+    $('#upZone').textContent = '✅ Terunggah — klik untuk ganti';
+    toast('Foto terunggah');
+  }catch(err){ $('#upZone').textContent = '📷 Klik untuk pilih foto'; toast(err.message,false); }
+});
+
+/* ---------- SAVE ---------- */
+$('#kegForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const item = {
+    judul: $('#fJudul').value.trim(),
+    tanggal: $('#fTanggal').value,
+    kategori: $('#fKategori').value,
+    isi: $('#fIsi').value.trim(),
+    gambar: $('#fGambarUrl').value
+  };
+  if(editingId){ item.id = editingId; await api('update', {item}); toast('Kegiatan diperbarui'); }
+  else { await api('add', {item}); toast('Kegiatan ditambahkan'); }
+  resetForm(); loadList();
+});
+
+function resetForm(){
+  editingId = null;
+  $('#kegForm').reset();
+  $('#formTitle').textContent = '➕ Tambah Kegiatan Baru';
+  $('#fGambarUrl').value = '';
+  $('#upPreview').style.display='none';
+  $('#upZone').textContent = '📷 Klik untuk pilih foto (JPG/PNG, maks 4MB)';
+}
+$('#resetBtn').addEventListener('click', resetForm);
+
+/* auto login */
+if(sessionPwd){ api('check').then(showDash).catch(()=>sessionStorage.removeItem('adminPwd')); }
+</script>
+</body>
+</html>
