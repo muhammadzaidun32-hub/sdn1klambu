@@ -26,8 +26,9 @@ function initSdnMain() {
 
   /* ----- Hero slider (5 gambar, autoplay + panah + dots) ----- */
   const slides = document.querySelectorAll('.hero-slide');
+  const track = document.querySelector('.hero-slider');
   const dotsWrap = document.getElementById('hsDots');
-  if (slides.length && dotsWrap) {
+  if (slides.length && dotsWrap && track) {
     let cur = 0, timer;
     slides.forEach((_, i) => {
       const d = document.createElement('button');
@@ -38,9 +39,9 @@ function initSdnMain() {
     });
     const dots = dotsWrap.querySelectorAll('.hs-dot');
     function go(n) {
-      slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
       cur = (n + slides.length) % slides.length;
-      slides[cur].classList.add('active'); dots[cur].classList.add('active');
+      track.style.transform = 'translateX(-' + cur * 100 + '%)';
+      dots.forEach((d, i) => d.classList.toggle('active', i === cur));
     }
     function restart() { clearInterval(timer); timer = setInterval(() => go(cur + 1), 5000); }
     const prev = document.getElementById('hsPrev');
