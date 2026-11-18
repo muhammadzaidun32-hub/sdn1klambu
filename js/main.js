@@ -2,8 +2,9 @@
    SDN 1 KLAMBU — Global JS
    Navigasi mobile, header shadow, reveal on scroll,
    lightbox galeri, back-to-top, counter animasi, form WhatsApp
+   Pola init: idempotent — jalan kapan pun script dimuat.
    ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
+function initSdnMain() {
 
   /* ----- Navbar mobile ----- */
   const burger = document.querySelector('.burger');
@@ -97,4 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ----- Tahun footer otomatis ----- */
   const yr = document.getElementById('tahun');
   if (yr) yr.textContent = new Date().getFullYear();
-});
+}
+
+/* Jalankan sekarang bila DOM sudah siap; kalau belum, tunggu event-nya */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSdnMain);
+} else {
+  initSdnMain();
+}
