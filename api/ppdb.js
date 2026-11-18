@@ -4,7 +4,13 @@
 // ============================================================
 const { readJson, writeJson, ok, bad, checkAuth, readBody } = require('./_lib.js');
 const FILE = 'data/ppdb.json';
-const ADMIN_KEY_HEADER = 'x-admin-password';
+
+
+function ambilDaftar(obj) {
+  if (Array.isArray(obj)) return obj;
+  if (Array.isArray(obj?.daftar)) return obj.daftar;
+  return [];
+}
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -28,8 +34,8 @@ export default async function handler(req, res) {
           return ok(res, { jumlah: 0 });
         }
 
-        const { data } = await readJson(FILE, { daftar: [] });
-      const daftar = data.daftar || [];
+        const r = await readJson(FILE, []);
+      const daftar = ambilDaftar(r.data);
         const item = daftar.find(d => d.id === id);
         if (!item) return bad(res, 404, "Kode pendaftaran tidak ditemukan");
         // Data sensitif tidak dikirim: hanya status
@@ -41,8 +47,8 @@ export default async function handler(req, res) {
     // PUBLIK: daftar baru (tanpa password)
     // ============================================================
     if (req.method === 'POST' && body.action === 'daftar') {
-      const { data } = await readJson(FILE, { daftar: [] });
-      const daftar = data.daftar || [];
+      const r = await readJson(FILE, { daftar: [] });
+      const daftar = ambilDaftar(r.data);
       const id = 'PPDB-' + Date.now().toString(36).toUpperCase().slice(-6);
       const pendaftar = {
         id,
@@ -58,7 +64,7 @@ export default async function handler(req, res) {
       };
       if (!pendaftar.nama) return bad(res, 400, 'Nama wajib diisi');
       daftar.push(pendaftar);
-      await writeJson(FILE, daftar);
+      await writeJson(FILE, { daftar });
       return ok(res, { ok: true, id, status: pendaftar.status, nama: pendaftar.nama });
     }
 
@@ -67,26 +73,26 @@ export default async function handler(req, res) {
     // ============================================================
     if (req.method === 'POST' && body.action === 'admin-list') {
       if (!checkAuth(req)) return bad(res, 401, 'Password admin salah');
-      const { data } = await readJson(FILE, { daftar: [] });
-      const daftar = data.daftar || [];
+      const r = await readJson(FILE, { daftar: [] });
+      const daftar = ambilDaftar(r.data);
       return ok(res, { daftar });
     }
 
     if (req.method === 'POST' && body.action === 'admin-status') {
       if (!checkAuth(req)) return bad(res, 401, 'Password admin salah');
-      const { data } = await readJson(FILE, { daftar: [] });
-      const daftar = data.daftar || [];
+      const r = await readJson(FILE, { daftar: [] });
+      const daftar = ambilDaftar(r.data);
       const item = daftar.find(d => d.id === body.id);
       if (!item) return bad(res, 404, 'Tidak ditemukan');
       item.status = body.status || item.status;
-      await writeJson(FILE, daftar);
+      await writeJson(FILE, { daftar });
       return ok(res, { ok: true, item });
     }
 
     if (req.method === 'POST' && body.action === 'admin-delete') {
       if (!checkAuth(req)) return bad(res, 401, 'Password admin salah');
-      const { data } = await readJson(FILE, { daftar: [] });
-      const sisa = (data.daftar || []).filter(d => d.id !== body.id);
+      const r = await readJson(FILE, { daftar: [] });
+      const sisa = ambilDaftar(r.data).filter(d => d.id !== body.id);
       await writeJson(FILE, { daftar: sisa });
       return ok(res, { ok: true });
     }
