@@ -10,21 +10,17 @@ function initSdnMain() {
   const burger = document.querySelector('.burger');
   const menu = document.querySelector('nav.menu');
   const backdrop = document.querySelector('.menu-backdrop');
-  if (burger && menu) {
-    const sync = () => {
-      const open = menu.classList.contains('open');
-      burger.classList.toggle('on', open);
+  if (burger && menu && !burger.dataset.inited) {
+    burger.dataset.inited = '1';
+    const setMenu = (open) => {
       menu.classList.toggle('open', open);
+      burger.classList.toggle('on', open);
       if (backdrop) backdrop.classList.toggle('show', open);
       document.body.style.overflow = open ? 'hidden' : '';
     };
-    burger.addEventListener('click', sync);
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      menu.classList.remove('open');
-      burger.classList.remove('on');
-      if (backdrop) backdrop.classList.remove('show');
-      document.body.style.overflow = '';
-    }));
+    burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    if (backdrop) backdrop.addEventListener('click', () => setMenu(false));
   }
 
   /* ----- Header shadow saat scroll ----- */
