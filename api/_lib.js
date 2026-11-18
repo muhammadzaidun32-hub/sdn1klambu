@@ -5,7 +5,7 @@ const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 function gh(path, opts = {}) {
-  return fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`, {
+  return fetch(`https://api.github.com/repos/${process.env.GITHUB_REPO}/contents/${path}`, {
     ...opts,
     headers: {
       Authorization: `Bearer ${GITHUB_TOKEN()}`,
