@@ -81,6 +81,13 @@
       </div>
     </div>
 
+    <!-- ==== UNDUH FORMULIR (untuk daftar langsung ke sekolah) ==== -->
+    <div class="info-panel" id="unduhFormulir" style="margin-top:1.8rem;display:none">
+      <h3>📥 Unduh Formulir Pendaftaran</h3>
+      <p style="font-size:.9rem;color:var(--mute);margin-bottom:1rem">Ingin <strong>daftar langsung ke sekolah</strong>? Unduh formulirnya, cetak, isi di rumah, lalu serahkan ke panitia PPDB beserta berkas persyaratan.</p>
+      <a class="btn btn-gold" id="linkFormulir" href="#" download>⬇️ Unduh Formulir Pendaftaran</a>
+    </div>
+
     <!-- ==== CEK STATUS ==== -->
     <div class="info-panel" style="margin-top:1.8rem" id="cekStatus">
       <h3>🔍 Cek Status Pendaftaran</h3>
@@ -99,7 +106,6 @@
   <div style="background:#fff;border-radius:18px;max-width:520px;width:100%;padding:2.2rem" id="buktiIsi"></div>
 </div>
 
-<script>
 <section class="sec">
   <div class="container">
     <div class="sec-head reveal">
@@ -273,9 +279,24 @@ function cetakBukti(){
   <p style="font-size:.85rem;color:#64748b">Simpan halaman ini / foto kode di atas sebagai bukti. Tunjukkan saat verifikasi berkas di sekolah.</p>
   <div class="ttd"><p>Klambu, ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}<br><br><br><strong>Panitia PPDB</strong></p></div>
   <script>window.print()<\/script>
-  </body></html>`);
+</body></html>`);
   w.document.close();
 }
+</script>
+
+<script>
+/* ==== tampilkan tombol unduh formulir bila tersedia ==== */
+(async function(){
+  try{
+    const s = await (await fetch('/api/situs?t='+Date.now())).json();
+    const f = s.formulirPpdb;
+    if(f && f.url){
+      const w = document.getElementById('unduhFormulir');
+      const a = document.getElementById('linkFormulir');
+      if(w && a){ a.href = f.url; a.setAttribute('download',''); w.style.display='block'; }
+    }
+  }catch{}
+})();
 </script>
 </body>
 </html>

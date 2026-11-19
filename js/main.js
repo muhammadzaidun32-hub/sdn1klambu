@@ -19,7 +19,11 @@ function initSdnMain() {
       document.body.style.overflow = open ? 'hidden' : '';
     };
     burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      a.classList.add('clicked');
+      setTimeout(() => a.classList.remove('clicked'), 320);
+      setMenu(false);
+    }));
     if (backdrop) backdrop.addEventListener('click', () => setMenu(false));
   }
 
@@ -91,14 +95,16 @@ function initSdnMain() {
   const lb = document.getElementById('lightbox');
   if (lb) {
     const lbImg = lb.querySelector('img');
-    document.querySelectorAll('.galeri-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        lbImg.src = img.src;
-        lbImg.alt = img.alt || '';
-        lb.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      });
+    // delegasi: bekerja untuk galeri statis maupun yang dimuat dari admin
+    document.addEventListener('click', e => {
+      const item = e.target.closest('.galeri-item');
+      if (!item) return;
+      const img = item.querySelector('img');
+      if (!img) return;
+      lbImg.src = img.src;
+      lbImg.alt = img.alt || '';
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
     });
     const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
     lb.querySelector('.lb-close').addEventListener('click', close);

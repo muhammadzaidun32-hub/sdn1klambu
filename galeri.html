@@ -57,7 +57,8 @@
 
 <section class="sec">
   <div class="container">
-    <div class="galeri-grid">
+    <div class="galeri-grid" id="galeriAdminGrid"></div>
+    <div class="galeri-grid" id="galeriStatis" style="display:none">
       <figure class="galeri-item"><img src="assets/img/pramuka.svg" alt="Kegiatan Pramuka"><figcaption>👨‍🏫 Ekstrakurikuler Pramuka</figcaption></figure>
       <figure class="galeri-item"><img src="assets/img/kelas-belajar.svg" alt="Suasana kelas"><figcaption>📖 Pembelajaran di kelas</figcaption></figure>
       <figure class="galeri-item"><img src="assets/img/olahraga.svg" alt="Olahraga siswa"><figcaption>⚽ Olahraga bersama</figcaption></figure>
@@ -128,5 +129,23 @@
 
 <script src="js/main.js"></script>
 <script src="js/situs-loader.js"></script>
+<script>
+/* ==== galeri dinamis dari admin (di atas galeri contoh) ==== */
+(async function(){
+  try{
+    const s = await (await fetch('/api/situs?t='+Date.now())).json();
+    const items = Array.isArray(s.galeri) ? s.galeri.filter(x=>x.foto) : [];
+    const grid = document.getElementById('galeriAdminGrid');
+    const statis = document.getElementById('galeriStatis');
+    if(items.length && grid){
+      grid.innerHTML = items.map(it=>`
+        <figure class="galeri-item"><img src="${it.foto}" alt="${it.keterangan||'Kegiatan'}"><figcaption>${it.keterangan||'Kegiatan Sekolah'}</figcaption></figure>`).join('');
+      if(statis) statis.style.display = 'grid';
+    } else if(statis){
+      statis.style.display = 'grid';
+    }
+  }catch{}
+})();
+</script>
 </body>
 </html>

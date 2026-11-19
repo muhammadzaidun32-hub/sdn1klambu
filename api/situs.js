@@ -150,6 +150,52 @@ export default async function handler(req, res) {
         await writeSitus(situs);
         return res.status(200).json({ ok: true, situs });
       }
+
+      // ---- simpan-galeri: daftar {fotoBase64|null, foto(url lama)|, keterangan} ----
+      if (action === "simpan-galeri") {
+        const masuk = Array.isArray(body.galeri) ? body.galeri : [];
+        const hasil = [];
+        for (const g of masuk) {
+          const item = { keterangan: g.keterangan || "", foto: g.foto || "" };
+          // foto baru (base64) → unggah ke repo; foto lama (url) → pertahankan
+          if (g.fotoBase64) {
+            item.foto = await uploadImage(`${UPLOAD_DIR}/galeri-${Date.now()}-${Math.random().toString(36).slice(2,7)}.jpg`, g.fotoBase64);
+          }
+          hasil.push(item);
+        }
+        situs.galeri = hasil;
+        await writeSitus(situs);
+        return res.status(200).json({ ok: true, situs });
+      }
+
+      // ---- simpan-guru: simpan seluruh daftar guru sekaligus ----
+      if (action === "simpan-guru") {
+        const masuk = Array.isArray(body.guru) ? body.guru : [];
+        const hasil = [];
+        for (let i = 0; i < masuk.length; i++) {
+          const g = masuk[i] || {};
+          const item = { nama: g.nama || "Guru", jabatan: g.jabatan || "Guru", foto: "" };
+          if (g.fotoBase64) {
+            item.foto = await uploadImage(`${UPLOAD_DIR}/guru-${Date.now()}-${i}.jpg`, g.fotoBase64);
+          } else if (typeof g.foto === "string" && g.foto) {
+            item.foto = g.foto; // URL lama yang dipertahankan
+          }
+          hasil.push(item);
+        }
+        situs.guru = hasil;
+        await writeSitus(situs);
+        return res.status(200).json({ ok: true, situs });
+      }
+
+      // ---- simpan-formulir: unggah formulir PPDB (PDF/JPG) untuk diunduh publik ----
+      if (action === "simpan-formulir") {
+        const ext = (body.ext || "pdf").replace(/[^a-z0-9]/gi, "").slice(0, 5) || "pdf";
+        const url = await uploadImage(`${UPLOAD_DIR}/formulir-ppdb.${ext}`, body.dataBase64);
+        situs.formulirPpdb = { url, nama: body.nama || "Formulir Pendaftaran", diperbarui: new Date().toISOString() };
+        await writeSitus(situs);
+        return res.status(200).json({ ok: true, url, situs });
+      }
+
       return res.status(400).json({ error: "Aksi tidak dikenal" });
     }
 

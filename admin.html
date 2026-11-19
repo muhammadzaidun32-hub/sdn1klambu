@@ -66,6 +66,12 @@ textarea.input{resize:vertical;min-height:110px}
 .keg-item .acts{display:flex;gap:.5rem;flex-shrink:0}
 .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .6rem;border-radius:999px;background:var(--blue-50);color:var(--blue-700);border:1px solid var(--blue-100)}
 
+.simpan-row{display:flex;align-items:center;gap:1rem;margin-top:1.4rem;padding-top:1.2rem;border-top:2px dashed var(--line);flex-wrap:wrap}
+.simpan-row .tersimpan{color:#065f46;font-weight:700}
+.guru-row .status-ganti{font-size:.72rem;color:var(--gold-500);font-weight:700}
+.simpan-row{display:flex;align-items:center;gap:1rem;margin-top:1.4rem;padding-top:1.2rem;border-top:2px dashed var(--line);flex-wrap:wrap}
+.simpan-row .tersimpan{color:#065f46;font-weight:700}
+.guru-row .status-ganti{font-size:.72rem;color:var(--gold-500);font-weight:700}
 /* tabs */
 .tabs{display:flex;gap:.5rem;margin-bottom:1.6rem;flex-wrap:wrap}
 .tab-btn{padding:.7rem 1.3rem;border-radius:12px;border:1.5px solid var(--line);background:#fff;font:inherit;font-weight:700;font-size:.9rem;color:var(--mute);cursor:pointer;transition:.2s}
@@ -107,7 +113,10 @@ textarea.input{resize:vertical;min-height:110px}
     <h1>Admin SDN 1 Klambu</h1>
     <p>Masukkan password untuk mengelola kegiatan terbaru</p>
     <form id="loginForm">
-      <input class="input" type="password" id="pwd" placeholder="Password admin" autocomplete="current-password" required>
+      <div style="position:relative">
+        <input class="input" type="password" id="pwd" placeholder="Password admin" autocomplete="current-password" required style="padding-right:3rem">
+        <button type="button" id="togglePwd" aria-label="Lihat sandi" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.15rem;line-height:1">👁</button>
+      </div>
       <div class="error-msg" id="loginErr">Password salah, coba lagi.</div>
       <button class="btn btn-primary" style="margin-top:1.1rem" type="submit">🔒 MasukDashboard Admin</button>
     </form>
@@ -210,10 +219,15 @@ textarea.input{resize:vertical;min-height:110px}
         <div style="display:flex;gap:.5rem"><button class="btn btn-sm btn-gold" onclick="pickSlot('kepsek')">Ganti</button><button class="btn btn-sm" style="background:var(--line)" onclick="resetSlot('kepsek')">↩ Kembali</button></div>
       </div>
 
-      <div class="img-slot">
-        <img id="img-galeri" src="assets/img/pramuka.svg" alt="galeri">
-        <div class="info"><h3>Foto Galeri &amp; Program</h3><p>Contoh foto untuk galeri kegiatan (pramuka, kelas, olahraga) — dipakai bila kegiatan belum berfoto</p></div>
-        <div style="display:flex;gap:.5rem"><a class="btn btn-sm" style="background:var(--line)" href="galeri.html" target="_blank">Lihat Galeri ↗</a></div>
+      <h2 style="margin-top:1.8rem;font-size:1.05rem">🖼️ Foto Galeri &amp; Program</h2>
+      <p style="color:var(--mute);font-size:.86rem;margin-bottom:1rem">Unggah foto kegiatan untuk galeri website. Tulis keterangan singkat di kolom yang tersedia, lalu klik <strong>Simpan</strong>.</p>
+      <div id="galeriSlots"></div>
+      <div style="margin-top:1rem;display:flex;gap:.8rem;flex-wrap:wrap">
+        <button class="btn btn-sm btn-gold" onclick="tambahSlotGaleri()">➕ Tambah Foto Galeri</button>
+      </div>
+      <div class="simpan-row">
+        <button class="btn btn-primary" id="simpanGambarBtn">💾 Simpan Perubahan Gambar</button>
+        <span id="gambarStatus" style="font-size:.85rem;color:var(--mute)"></span>
       </div>
     </div>
   </div>
@@ -225,6 +239,7 @@ textarea.input{resize:vertical;min-height:110px}
       <div id="guruList">Memuat…</div>
       <div style="margin-top:1.2rem;display:flex;gap:.8rem;flex-wrap:wrap">
         <button class="btn btn-primary" style="width:auto" onclick="addGuru()">➕ Tambah Guru</button>
+        <button class="btn btn-gold" style="width:auto" id="simpanGuruBtn">💾 Simpan Perubahan Data Guru</button>
       </div>
     </div>
   </div>
@@ -261,6 +276,19 @@ textarea.input{resize:vertical;min-height:110px}
   </div>
 
   <div class="tab-view" id="tab-ppdb">
+    <div class="panel" style="margin-bottom:1.6rem">
+      <h2>📄 Formulir Pendaftaran (Unduhan Orang Tua)</h2>
+      <p style="color:var(--mute);font-size:.87rem;margin-bottom:1rem">Unggah formulir pendaftaran (PDF/JPG/DOCX). Tombol unduh akan muncul otomatis di halaman PPDB untuk orang tua yang ingin <strong>daftar langsung ke sekolah</strong>.</p>
+      <div class="img-slot" id="formulirSlot">
+        <div style="width:120px;height:80px;border-radius:10px;background:var(--blue-50);display:grid;place-items:center;font-size:2rem;flex-shrink:0">📄</div>
+        <div class="info">
+          <h3 id="formulirNama">Belum ada formulir terunggah</h3>
+          <p id="formulirInfo">Unggah file untuk mengaktifkan tombol unduh di halaman PPDB.</p>
+        </div>
+        <button class="btn btn-sm btn-gold" id="btnFormulir">📤 Unggah / Ganti Formulir</button>
+      </div>
+      <input type="file" id="formulirFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" class="hidden">
+    </div>
     <div class="panel">
       <h2>📨 Pendaftar PPDB Online</h2>
       <div style="display:flex;gap:.8rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap">
@@ -279,6 +307,7 @@ textarea.input{resize:vertical;min-height:110px}
   </div>
 
   <input type="file" id="slotFile" accept="image/*" class="hidden">
+  <input type="file" id="galeriFile" accept="image/*" class="hidden">
   <input type="file" id="kegFotoFile" accept="image/*" class="hidden">
   <input type="file" id="guruFile" accept="image/*" class="hidden">
 </main>
@@ -298,6 +327,8 @@ document.querySelectorAll('.tab-btn').forEach(b=>{
     if(b.dataset.tab==='tab-guru') loadGuru();
     if(b.dataset.tab==='tab-set') loadSet();
     if(b.dataset.tab==='tab-ppdb') loadPpdb();
+    if(b.dataset.tab==='tab-ppdb') muatFormulir();
+    if(b.dataset.tab==='tab-img') renderGaleriSlots();
   });
 });
 
@@ -724,6 +755,229 @@ document.getElementById('kegFotoFile')?.addEventListener('change', async e=>{
     if(!res2.ok) throw new Error(j2.error||'Gagal simpan');
     toast('Foto kegiatan diperbarui!');
     loadList();
+  }catch(err){ toast(err.message, false); }
+});
+
+/* ================= PENDING + SIMPAN (gambar & guru) ================= */
+const pendingGaleri = [];
+const pendingKepsek = { fotoBase64: null, nama: null };
+let guruDraft = null;
+
+function tandaiGanti(elId){
+  const el = document.getElementById(elId);
+  if (el) { el.style.outline = '3px solid var(--gold-400)'; el.style.outlineOffset = '3px'; }
+}
+function tandaiTersimpan(elId){
+  const el = document.getElementById(elId);
+  if (el) { el.style.outline = '3px solid var(--green-500)'; el.style.outlineOffset = '3px';
+    setTimeout(()=>{ el.style.outline = ''; }, 2500); }
+}
+function setStatGbr(teks, ok){
+  const s = document.getElementById('gambarStatus');
+  if (s) { s.textContent = teks; s.className = ok ? 'tersimpan' : ''; }
+}
+
+/* ---- GALERI: slot dinamis ---- */
+function renderGaleriSlots(){
+  const wrap = document.getElementById('galeriSlots');
+  if (!wrap) return;
+  const s = situsCache || {};
+  const arr = Array.isArray(s.galeri) && s.galeri.length ? s.galeri : [{keterangan:'', foto:''}];
+  wrap.innerHTML = arr.map((g,i)=>`
+    <div class="img-slot" id="gslot-${i}">
+      <img id="gimg-${i}" src="${g.foto || 'assets/img/pramuka.svg'}" alt="${g.keterangan||'foto galeri'}" onerror="this.src='assets/img/pramuka.svg'">
+      <div class="info">
+        <h3>Foto ${i+1}</h3>
+        <input class="input" id="gket-${i}" placeholder="Keterangan foto (cth: Lomba 17 Agustus)" value="${g.keterangan||''}" style="margin-top:.4rem">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.4rem">
+        <button class="btn btn-sm btn-gold" onclick="pickGaleri(${i})">📤 Unggah Foto</button>
+        <button class="btn btn-sm btn-red" onclick="hapusSlotGaleri(${i})">Hapus</button>
+      </div>
+    </div>`).join('');
+  window._galeriDraft = arr.map(g => ({...g}));
+}
+function tambahSlotGaleri(){
+  (window._galeriDraft = window._galeriDraft || []).push({keterangan:'', foto:''});
+  renderGaleriSlots();
+}
+function hapusSlotGaleri(i){
+  if(!confirm('Hapus foto galeri ini?')) return;
+  window._galeriDraft.splice(i,1);
+  renderGaleriSlots();
+}
+function pickGaleri(i){
+  const inp = document.getElementById('galeriFile');
+  if (!inp) return;
+  inp.value=''; inp.dataset.idx = i; inp.click();
+}
+document.getElementById('galeriFile')?.addEventListener('change', async e=>{
+  const i = e.target.dataset.idx; const file = e.target.files[0];
+  if(i===undefined || !file) return;
+  if(file.size > 4*1024*1024){ toast('Maksimal 4MB', false); return; }
+  const dataURL = await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result); fr.readAsDataURL(file); });
+  window._galeriDraft[i].foto = dataURL;
+  window._galeriDraft[i].fotoBase64 = dataURL.split(',')[1];
+  const img = document.getElementById('gimg-'+i);
+  if(img) img.src = dataURL;
+  tandaiGanti('gslot-'+i);
+  setStatGbr('Ada perubahan belum disimpan — klik Simpan.');
+});
+
+function kumpulkanGaleri(){
+  const arr = window._galeriDraft || [];
+  arr.forEach((g,i)=>{
+    const inp = document.getElementById('gket-'+i);
+    if(inp) g.keterangan = inp.value.trim();
+  });
+  return arr.filter(g => g.foto);
+}
+
+/* tombol SIMPAN GAMBAR */
+document.getElementById('simpanGambarBtn')?.addEventListener('click', async ()=>{
+  const btn = document.getElementById('simpanGambarBtn');
+  btn.disabled = true; btn.textContent = '⏳ Menyimpan...';
+  try{
+    const res = await fetch(SITUS_API, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':sessionPwd},
+      body: JSON.stringify({action:'simpan-galeri', galeri: kumpulkanGaleri()})
+    });
+    const j = await res.json();
+    if(!res.ok) throw new Error(j.error||'Gagal');
+    situsCache = j.situs;
+    setStatGbr('✅ Tersimpan di website!', true);
+    toast('Gambar galeri tersimpan!');
+    renderGaleriSlots();
+  }catch(e){ setStatGbr('❌ ' + e.message, false); }
+  finally{ btn.disabled=false; btn.textContent='💾 Simpan Perubahan Gambar'; }
+});
+
+/* ---- GURU: draft + simpan sekali klik ---- */
+function renderGuruDraft(){
+  const list = document.getElementById('guruList');
+  if (!list) return;
+  const guru = guruDraft || [];
+  if(!guru.length){ list.innerHTML = '<p style="color:var(--mute)">Belum ada data guru.</p>'; return; }
+  list.innerHTML = guru.map((g,i)=>`
+    <div class="guru-row" id="gurorow-${i}">
+      <img src="${g.foto || 'assets/img/guru-avatar.svg'}" alt="${g.nama||'guru'}" onerror="this.src='assets/img/guru-avatar.svg'">
+      <div style="flex:1;min-width:140px">
+        <input class="input" id="guru-nama-${i}" value="${g.nama||''}" placeholder="Nama & gelar guru">
+        <input class="input" id="guru-jab-${i}" value="${g.jabatan||''}" placeholder="Jabatan" style="margin-top:.4rem">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.4rem">
+        ${g.fotoBase64 ? '<span class="status-ganti">Belum disimpan ★</span>' : ''}
+        <button class="btn btn-sm btn-gold" onclick="document.getElementById('guruFile').dataset.idx='${i}';document.getElementById('guruFile').click()">Ganti Foto</button>
+        <button class="btn btn-sm btn-red" onclick="hapusGuru(${i})">Hapus</button>
+      </div>
+    </div>`).join('');
+}
+async function loadGuru(){
+  try{
+    const res = await fetch(SITUS_API + '?t=' + Date.now());
+    const s = await res.json();
+    guruDraft = (s.guru && s.guru.length ? s.guru : []).map(g=>({...g, fotoBase64:null}));
+    renderGuruDraft();
+  }catch{ guruDraft = []; renderGuruDraft(); }
+}
+document.getElementById('guruFile')?.addEventListener('change', async e=>{
+  const i = e.target.dataset.idx; const file = e.target.files[0];
+  if(i===undefined || !file) return;
+  if(file.size > 4*1024*1024){ toast('Maksimal 4MB', false); return; }
+  const dataURL = await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result); fr.readAsDataURL(file); });
+  guruDraft[i].foto = dataURL;
+  guruDraft[i].fotoBase64 = dataURL.split(',')[1];
+  renderGuruDraft();
+  toast('Foto dimuat — klik Simpan Data Guru untuk menyimpan.');
+});
+async function addGuru(){
+  guruDraft = guruDraft || [];
+  guruDraft.push({nama:'Guru Baru', jabatan:'Guru Kelas', foto:'', fotoBase64:null});
+  renderGuruDraft();
+}
+async function hapusGuru(i){
+  if(!confirm('Hapus guru ini?')) return;
+  guruDraft.splice(i,1);
+  renderGuruDraft();
+}
+document.getElementById('simpanGuruBtn')?.addEventListener('click', async ()=>{
+  const btn = document.getElementById('simpanGuruBtn');
+  btn.disabled = true; btn.textContent = '⏳ Menyimpan...';
+  try{
+    guruDraft.forEach((g,i)=>{
+      const n = document.getElementById('guru-nama-'+i);
+      const j = document.getElementById('guru-jab-'+i);
+      if(n) g.nama = n.value.trim();
+      if(j) g.jabatan = j.value.trim();
+    });
+    const res = await fetch(SITUS_API, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':sessionPwd},
+      body: JSON.stringify({action:'simpan-guru', guru: guruDraft.map(g=>({nama:g.nama,jabatan:g.jabatan,fotoBase64:g.fotoBase64||null}))})
+    });
+    const j = await res.json();
+    if(!res.ok) throw new Error(j.error||'Gagal');
+    situsCache = j.situs;
+    toast('✅ Data guru tersimpan!');
+    loadGuru();
+  }catch(e){ toast(e.message, false); }
+  finally{ btn.disabled=false; btn.textContent='💾 Simpan Perubahan Data Guru'; }
+});
+
+
+/* ===== toggle lihat sandi ===== */
+document.getElementById('togglePwd')?.addEventListener('click', ()=>{
+  const p = document.getElementById('pwd');
+  const t = document.getElementById('togglePwd');
+  const show = p.type === 'password';
+  p.type = show ? 'text' : 'password';
+  t.textContent = show ? '🙈' : '👁';
+  t.setAttribute('aria-label', show ? 'Sembunyikan sandi' : 'Lihat sandi');
+});
+
+
+/* ================= FORMULIR PPDB ================= */
+async function muatFormulir(){
+  try{
+    const s = situsCache || await (await fetch(SITUS_API + '?t=' + Date.now())).json();
+    const f = s.formulirPpdb;
+    const nama = document.getElementById('formulirNama');
+    const info = document.getElementById('formulirInfo');
+    if(f && f.url){
+      nama.textContent = '📄 ' + (f.nama || 'Formulir Pendaftaran');
+      info.innerHTML = `Terunggah — <a href="${f.url}" target="_blank" rel="noopener">pratinjau file ↗</a>`;
+      document.getElementById('btnFormulir').textContent = '📤 Ganti Formulir';
+    } else {
+      nama.textContent = 'Belum ada formulir terunggah';
+      info.textContent = 'Unggah file untuk mengaktifkan tombol unduh di halaman PPDB.';
+      document.getElementById('btnFormulir').textContent = '📤 Unggah Formulir';
+    }
+  }catch{}
+}
+document.getElementById('btnFormulir')?.addEventListener('click', ()=>{
+  const inp = document.getElementById('formulirFile');
+  inp.value = ''; inp.click();
+});
+document.getElementById('formulirFile')?.addEventListener('change', async e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 6*1024*1024){ toast('Maksimal 6MB', false); return; }
+  toast('Mengunggah formulir...');
+  const dataURL = await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result); fr.readAsDataURL(file); });
+  const b64 = dataURL.split(',')[1];
+  const ext = (file.name.split('.').pop() || 'pdf').toLowerCase();
+  try{
+    const res = await fetch(SITUS_API, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Admin-Password':sessionPwd},
+      body: JSON.stringify({action:'simpan-formulir', dataBase64:b64, ext, nama: file.name})
+    });
+    const j = await res.json();
+    if(!res.ok) throw new Error(j.error||'Gagal');
+    situsCache = j.situs;
+    toast('✅ Formulir tersimpan — tombol unduh aktif di halaman PPDB!');
+    muatFormulir();
   }catch(err){ toast(err.message, false); }
 });
 
