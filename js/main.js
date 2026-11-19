@@ -27,6 +27,15 @@ function initSdnMain() {
     if (backdrop) backdrop.addEventListener('click', () => setMenu(false));
   }
 
+  /* ----- Menu aktif otomatis (koreksi bila HTML salah tandai) ----- */
+  const halaman = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('nav.menu a').forEach(a => {
+    const target = a.getAttribute('href');
+    if (target === halaman) { a.classList.add('active'); }
+    else if (a.classList.contains('active')) { a.classList.remove('active'); }
+  });
+
+
 
   /* ----- Hero slider (5 gambar, autoplay + panah + dots) ----- */
   const slides = document.querySelectorAll('.hero-slide');
